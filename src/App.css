@@ -5,25 +5,6 @@
   "header header"
   "nav content";
 
-  grid-template-columns: 2fr 10fr;
+  grid-template-columns: 2fr 12fr;
   grid-gap: 10px;
-}
-
-.app-header {
-  grid-area: header;
-  background-color: cadetblue;
-}
-
-.app-header img {
-  height: 80px;
-}
-
-.app-nav {
-  grid-area: nav;
-  background-color: chartreuse;
-}
-
-.app-content{
-  grid-area: content;
-  background-color: dimgray;
 }
