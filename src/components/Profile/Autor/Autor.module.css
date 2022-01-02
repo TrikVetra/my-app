@@ -1,0 +1,24 @@
+.autor{
+
+    display: grid;
+
+  grid-template-areas: 
+     "img description";
+  grid-template-columns: 100px 100%;
+  grid-gap: 10px;
+
+  background-color: grey;
+}
+
+.autor img{
+    grid-area: img;
+
+    height: 100px;
+}
+
+.autor_description{
+    grid-area: description;
+
+    color: darkslategrey;
+    transform: translateY(40%);
+}

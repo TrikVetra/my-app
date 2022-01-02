@@ -1,6 +1,7 @@
 .app_nav {
     grid-area: nav;
     background-color:cadetblue;
+    height: 100%;
   }
 
 .item {
