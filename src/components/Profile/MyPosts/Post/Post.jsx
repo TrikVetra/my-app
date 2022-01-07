@@ -1,10 +1,12 @@
 import classes from './Post.module.css';
 
-const Post = () => {
+const Post = (props) => {
     return (
 
         <div className='posts'>
-            <div className={classes.item}>Post 1</div>
+            <div className={classes.item}>
+                {props.message}
+            </div>
         </div>
 
     );

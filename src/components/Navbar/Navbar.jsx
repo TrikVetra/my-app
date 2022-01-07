@@ -5,13 +5,13 @@ const Navbar = () => {
     return (
         <nav className={classes.app_nav}>
             <div className={classes.item}>
-                <a>Profile</a>
+                <a href = '/profile'>Profile</a>
             </div>
             <div className={classes.item}>
-                <a>Message</a>
+                <a href='/dialogsggg'>Message</a>
             </div>
             <div className={classes.item}>
-                <a>Users</a>
+                <a>News</a>
             </div>
         </nav>
     );

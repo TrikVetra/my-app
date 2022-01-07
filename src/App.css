@@ -1,4 +1,4 @@
-.app-wrapper {
+.app_wrapper {
   display: grid;
 
   grid-template-areas: 
@@ -8,4 +8,11 @@
   grid-template-columns: 2fr 12fr;
  
   grid-gap: 10px;
+}
+
+.app_wrapper_content {
+  
+  grid-area: content;
+  background-color: dimgray;    
+
 }

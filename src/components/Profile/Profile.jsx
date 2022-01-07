@@ -7,14 +7,14 @@ import ProfileHeader from './ProfileHeader/ProfileHeader';
 
 const Profile = () => {
     return (
-        <div className={classes.Profile}>
+        <div>
             
                 <ProfileHeader />
                 <Autor />
                 <NewPost />
-                <Post />
-                <Post />
-                <Post />
+                <Post message = 'My first post'/>
+                <Post message = 'Расскажу о муравьях'/>
+                <Post message = 'И о снеговиках'/>
           
            
            
