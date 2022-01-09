@@ -7,8 +7,12 @@
 .item {
   color: white;
   text-decoration: none;
+
+  padding-left: 5px;
 }
 
 .item .active {
   color:coral;
+
+  padding-left: 5px;
 }
