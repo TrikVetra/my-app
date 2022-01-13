@@ -6,17 +6,26 @@ import ProfileHeader from './ProfileHeader/ProfileHeader';
 
 
 const Profile = () => {
+
+    let postData = [
+        {id: 1, message: 'My first post'},
+        {id: 2, message: 'Расскажу о муравьях'},
+        {id: 3, message: 'И о снеговиках'}
+    ]
+
+    let postElement = postData.map (
+        post => <Post message = {post.message}/>
+    )
+
     return (
         <div>
             
                 <ProfileHeader />
                 <Autor />
                 <NewPost />
-                <Post message = 'My first post'/>
-                <Post message = 'Расскажу о муравьях'/>
-                <Post message = 'И о снеговиках'/>
-          
-           
+
+                {postElement}
+
            
         </div>
     );
