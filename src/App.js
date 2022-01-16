@@ -12,15 +12,20 @@ import Profile from './components/Profile/Profile';
 
 const App = (props) => {
   return (
+
+
     <BrowserRouter>
       <div className="app_wrapper">
         <Header />
         <Navbar />
         <div className="app_wrapper_content">
           <Routes>
-            <Route path='/profile' element={<Profile/>} />
-            <Route path='/dialogs/*' element={<Dialogs/>} /> 
+            <Route path='/profile' element={<Profile postData={props.postData}/>} />
+            <Route path='/dialogs/*' element={<Dialogs dialogsData={props.dialogsData} messagesData={props.messagesData}/>} /> 
             <Route path='/news' element={<News/>} /> 
+
+            
+            
           </Routes>
           {/* <Profile />  */}
           {/* <Dialogs /> */}

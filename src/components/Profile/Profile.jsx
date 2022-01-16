@@ -5,15 +5,11 @@ import classes from './Profile.module.css';
 import ProfileHeader from './ProfileHeader/ProfileHeader';
 
 
-const Profile = () => {
+const Profile = (props) => {
 
-    let postData = [
-        {id: 1, message: 'My first post'},
-        {id: 2, message: 'Расскажу о муравьях'},
-        {id: 3, message: 'И о снеговиках'}
-    ]
 
-    let postElement = postData.map (
+
+    let postElement = props.postData.map (
         post => <Post message = {post.message}/>
     )
 
