@@ -7,9 +7,9 @@ import ProfileHeader from './ProfileHeader/ProfileHeader';
 
 const Profile = (props) => {
 
+    
 
-
-    let postElement = props.postData.map (
+    let postElement = props.state.postData.map (
         post => <Post message = {post.message}/>
     )
 
@@ -18,7 +18,7 @@ const Profile = (props) => {
             
                 <ProfileHeader />
                 <Autor />
-                <NewPost />
+                <NewPost addPost={props.addPost}/>
 
                 {postElement}
 
