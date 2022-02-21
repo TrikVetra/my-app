@@ -6,10 +6,10 @@ const NewPost = (props) => {
 let newPostElement = React.createRef();
 
 let addNewPost = () => {
-    debugger;
+    
     let text = newPostElement.current.value;    
     props.addPost(text);
-    debugger;
+    
     
 }
 
@@ -26,3 +26,4 @@ let addNewPost = () => {
 }
 
 export default NewPost;
+

@@ -10,11 +10,8 @@ import Profile from './components/Profile/Profile';
 
 
 
-const App = (props) => {
-  
-  return (
-
-    
+const App = (props) => {  
+  return (    
     <BrowserRouter>
       <div className="app_wrapper">
         <Header />
@@ -23,15 +20,13 @@ const App = (props) => {
           <Routes>
             <Route path='/profile' element={<Profile state={props.state.profilePage} addPost={props.addPost}/>} />
             <Route path='/dialogs/*' element={<Dialogs state={props.state.dialogsPage} />} /> 
-            <Route path='/news' element={<News/>} />             
-            
+            <Route path='/news' element={<News/>} />    
           </Routes>
-
         </div>
-
       </div>
     </BrowserRouter>
   );
 }
 
 export default App;
+

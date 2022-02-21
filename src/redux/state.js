@@ -30,14 +30,14 @@ let state = {
 }
 
 export let addPost = (postMessage) => {
-    debugger;
+    
 
     let newPost = {
         id: 5, 
         message: postMessage
     }
     
-    debugger;
+    
     state.profilePage.postData.push(newPost);
  
     renderEntireTree(state);
