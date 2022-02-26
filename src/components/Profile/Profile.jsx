@@ -18,7 +18,9 @@ const Profile = (props) => {
             
                 <ProfileHeader />
                 <Autor />
-                <NewPost addPost={props.addPost}/>
+                <NewPost addPost={props.addPost}
+                         newPostText={props.state.newPostText}
+                />
 
                 {postElement}
 
@@ -28,3 +30,4 @@ const Profile = (props) => {
 }
 
 export default Profile;
+
