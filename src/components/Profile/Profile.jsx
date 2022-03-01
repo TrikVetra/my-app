@@ -20,6 +20,7 @@ const Profile = (props) => {
                 <Autor />
                 <NewPost addPost={props.addPost}
                          newPostText={props.state.newPostText}
+                         updateNewPostText={props.updateNewPostText}
                 />
 
                 {postElement}
