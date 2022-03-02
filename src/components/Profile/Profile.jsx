@@ -18,9 +18,8 @@ const Profile = (props) => {
             
                 <ProfileHeader />
                 <Autor />
-                <NewPost addPost={props.addPost}
+                <NewPost dispatch={props.dispatch}
                          newPostText={props.state.newPostText}
-                         updateNewPostText={props.updateNewPostText}
                 />
 
                 {postElement}
