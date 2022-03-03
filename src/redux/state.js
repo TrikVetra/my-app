@@ -1,6 +1,7 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
-
+const ADD_MESSAGE = 'ADD-MESSAGE';
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
 let store = {
     _state: {
@@ -50,16 +51,32 @@ let store = {
         let newPost = {
             id: 5, 
             message: this._state.profilePage.newPostText
-        }
-
-    
+        }   
             
         this._state.profilePage.postData.push(newPost);
         this._state.profilePage.newPostText = '';
         this._callSubscriber(this._state);
     },
+
     _updateNewPostText (newText) {          
         this._state.profilePage.newPostText = newText;
+        this._callSubscriber(this._state);
+    },
+
+    _addMessage () { 
+
+        let newMessage = {
+            id: 5, 
+            message: this._state.dialogsPage.newMessageText
+        }   
+            
+        this._state.dialogsPage.messagesData.push(newMessage);
+        this._state.dialogsPage.newMessageText = '';
+        this._callSubscriber(this._state);
+    },
+    
+    _updateNewMessageText (newText) {          
+        this._state.dialogsPage.newMessageText = newText;
         this._callSubscriber(this._state);
     },
 
@@ -69,6 +86,12 @@ let store = {
         } 
         else if (action.type === UPDATE_NEW_POST_TEXT){
             this._updateNewPostText (action.newText);
+        }
+        else if (action.type === ADD_MESSAGE){
+            this._addMessage();
+        }
+        else if (action.type === UPDATE_NEW_MESSAGE_TEXT){
+            this._updateNewMessageText (action.newText);
         }
     }
 
@@ -84,6 +107,15 @@ export const updateNewPostTextActionCreator = (text) => //return type, newText
         newText: text    
     })
 
+export const addMessageActionCreator = () =>  
+    ({type: ADD_MESSAGE,}) //return type
+    
+
+export const updateNewMessageTextActionCreator = (text) => //return type, newText
+    ({
+        type: UPDATE_NEW_MESSAGE_TEXT,
+        newText: text    
+    })
 
 window.store = store;
 export default store;
