@@ -1,7 +1,24 @@
 const ADD_MESSAGE = 'ADD-MESSAGE';
 const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 
-const dialogsReducer = (state, action) => {
+let initialState = {
+    dialogsData: [
+        { id: 1, name: 'Vika' },
+        { id: 2, name: 'Tanya' },
+        { id: 3, name: 'Mika' }
+    ],
+
+    messagesData: [
+        { id: 1, message: 'Привет' },
+        { id: 2, message: 'Как дела?' },
+        { id: 3, message: 'Хорошо' },
+        { id: 4, message: 'Как всегда' }
+    ],
+
+    newMessageText: "Yo!"
+}
+
+const dialogsReducer = (state = initialState, action) => {
     switch (action.type){
         case ADD_MESSAGE:
             let newMessage = {
