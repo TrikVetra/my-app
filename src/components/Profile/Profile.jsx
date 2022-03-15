@@ -1,7 +1,5 @@
 import Autor from './Autor/Autor';
 import MyPostsContainer from './MyPosts/MyPosts/MyPostsContainer';
-//import Post from './MyPosts/Post/Post';
-import classes from './Profile.module.css';
 import ProfileHeader from './ProfileHeader/ProfileHeader';
 
 const Profile = (props) => {
@@ -11,8 +9,7 @@ const Profile = (props) => {
             
                 <ProfileHeader />
                 <Autor />
-                <MyPostsContainer store = {props.store}
-                />
+                <MyPostsContainer />
 
                 
 
