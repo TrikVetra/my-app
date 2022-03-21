@@ -14,21 +14,22 @@ let inetialState = {
 const profileReducer = (state = inetialState, action) => {
     
     switch (action.type) {
-        case ADD_POST: {
-            let newPost = {
+        case ADD_POST: {    
+            let newPost = {     //готовим объект, который собираемся пушить
                 id: 5, 
                 message: state.newPostText
             }   
-            let stateCopy = {...state};
-            stateCopy.postData = [...state.postData];
-            stateCopy.postData.push(newPost);    
-            stateCopy.newPostText = '';
-            return stateCopy;
+            return {...state,       //возвращаем копию состояния
+                            postData: [...state.postData, newPost],
+                            newPostText: ''};
+            
+            
         }
         case UPDATE_NEW_POST_TEXT:{            
-            let stateCopy = {...state}
-            stateCopy.newPostText = action.newText;
-            return stateCopy;
+            return {...state,  //возвращаем копию состояния
+                            newPostText: action.newText}
+            
+            //return stateCopy;
 
         }
         default:

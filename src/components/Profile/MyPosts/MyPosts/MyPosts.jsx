@@ -18,7 +18,7 @@ let onPostChange = () => {
 
 
 let postElement = props.postData.map (
-    post => <Post message = {post.message}/>
+    post => <Post message = {post.message} key = {post.id}/>
 )
 
     return (

@@ -3,7 +3,7 @@
 const News = (props) => {
     return (
         <div>
-            News
+            Users
         </div>
     )
 
