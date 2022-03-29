@@ -1,40 +1,33 @@
 
 
+import axios from 'axios';
 import styles from './Users.module.css';
+import userPhoto from '../../assets/img/monkey.png';
 
 const Users = (props) => {
 
+
+    //запрос на сервак
+    let getUsers = () => {    
     if (props.usersData.length === 0) {
-    props.setUsers (
-        [
-            {
-                id: 1,
-                photoURL: 'https://img.icons8.com/external-others-made-by-made/452/external-animals-zoo-others-made-by-made-58.png',
-                followed: false, name: 'Tanya', status: 'Here', 
-                location: { city: 'Вайтран', country: 'Скайрим' },
-            },
-            {
-                id: 2,
-                photoURL: 'https://img.icons8.com/external-others-made-by-made/452/external-animals-zoo-others-made-by-made-41.png',
-                followed: false, name: 'Yan', status: 'There', 
-                location: { city: 'Анвил', country: 'Обливион' },
-            },
-            {
-                id: 3,
-                photoURL: 'https://img.icons8.com/external-others-made-by-made/452/external-animals-zoo-others-made-by-made-72.png',
-                followed: true, name: 'Dima', status: 'Bath', 
-                location: { city: 'Вивек', country: 'Морровинд' },
-            },
-        ],
-    )
+        return axios.get("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+            
+            let data = response.data.items; 
+            props.setUsers(data);
+        }
+    );
     }
+}
 
     return (
         <div>
+            <div>
+                <button onClick={getUsers}>Отобразить пользователей</button>
+            </div>
             {props.usersData.map(user => <div key={user.id}>
                 <span>
                     <div>
-                        <img src={user.photoURL} className={styles.userPhoto} />
+                        <img src={user.photos.small != null ? user.photos.small: userPhoto} className={styles.userPhoto} />
                     </div>
                     <div>
                         {user.followed
@@ -49,8 +42,8 @@ const Users = (props) => {
                         <div>{user.status}</div>
                     </span>
                     <span>
-                        <div></div>
-                        <div>{user.location.city}</div>
+                        
+                        <div>{"user.location.city"}</div>
                     </span>
                 </span>
             </div>)}
