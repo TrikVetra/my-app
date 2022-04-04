@@ -7,7 +7,7 @@ const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
 let initialState = {
     pageSize: 30,
     totalUsersCount: 0,
-    currentPage: 2,
+    currentPage: 1,
     usersData: [
         // {
         //     id: 1,
