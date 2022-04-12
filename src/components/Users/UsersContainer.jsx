@@ -1,16 +1,19 @@
 import { connect } from "react-redux";
 import { 
-    followActionCreator, 
-    unfollowActionCreator, 
-    setUsersActionCreator, 
-    setCurrentPageActionCreator,
-    setUsersCountActionCreator
+    follow, 
+    unfollow, 
+    setUsers, 
+    setCurrentPage,
+    setUsersCount,
+    toggleIsFetchig,
 } from "../../redux/usersReducer";
 
 import React from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import Users from './Users';
+import Preloader from '../Common/Preloader';
+
 
 class UsersContainer extends React.Component {
 
@@ -29,43 +32,52 @@ class UsersContainer extends React.Component {
             friend: (boolean)
             if true, then find only followed users, false - only not followed users, if omit parameter - all users
     
-            https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}
+            example:
             https://social-network.samuraijs.com/api/1.0/users?page=2&count=3
             */
     
         componentDidMount () {        
-            let page=this.props.currentPage;
-            let count=this.props.pageSize;
+            this.props.toggleIsFetchig(true);
             axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
                 .then(response => {
                 let data = response.data.items;
                 this.props.setUsers(data);
-                this.props.setUsersCount(response.data.totalCount)
+                this.props.setUsersCount(response.data.totalCount);
+                this.props.toggleIsFetchig(false);
                 }
-            );
-    
+            );    
         }
     
         onPageChanged = (pageNumber) => {
             this.props.setCurrentPage(pageNumber);
+            this.props.toggleIsFetchig(true);
             axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
                 .then(response => {
                 let data = response.data.items;
                 this.props.setUsers(data);
+                this.props.toggleIsFetchig(false);
                 }
             );
         }    
+
+        
     
             render()
+            
             {   
-                return <Users totalUsersCount = {this.props.totalUsersCount}
+                return <>
+                {/* <img src = {Preloader}/> */}
+                {/* {console.log(this.props)} */}
+                {this.props.isFetching ? <Preloader/> : null}
+                <Users totalUsersCount = {this.props.totalUsersCount}
                               pageSize = {this.props.pageSize}
                               currentPage = {this.props.currentPage}
                               onPageChanged = {this.onPageChanged}
                               usersData = {this.props.usersData}
                               unfollow = {this.props.unfollow}
                               follow = {this.props.follow}
-                              />                          
+                              />                                
+                </>                  
             }       
     }
 
@@ -75,27 +87,42 @@ let mapStateToProps = (state) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching,
     }
 }
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (userID) => { 
-            dispatch(followActionCreator(userID));
-        },
-        unfollow: (userID) => { 
-            dispatch(unfollowActionCreator(userID));
-        },
-        setUsers: (users) => {
-            dispatch(setUsersActionCreator(users));
-        },
-        setCurrentPage: (pageNumber) => {
-            dispatch(setCurrentPageActionCreator(pageNumber));
-        },
-        setUsersCount: (totalCount) => {
-            dispatch(setUsersCountActionCreator(totalCount));
-        },
-    }
-}
+// let mapDispatchToProps = (dispatch) => {
+//     return {
+//         follow: (userID) => { 
+//             dispatch(followActionCreator(userID));
+//         },
+//         unfollow: (userID) => { 
+//             dispatch(unfollowActionCreator(userID));
+//         },
+//         setUsers: (users) => {
+//             dispatch(setUsersActionCreator(users));
+//         },
+//         setCurrentPage: (pageNumber) => {
+//             dispatch(setCurrentPageActionCreator(pageNumber));
+//         },
+//         setUsersCount: (totalCount) => {
+//             dispatch(setUsersCountActionCreator(totalCount));
+//         },
+//         toggleIsFetchig: (isFetching) => {
+//             dispatch(toggleIsFetchigActionCreator(isFetching));
+//         }
+//     }
+// }
 
-export default connect (mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect (mapStateToProps, 
+    { 
+        //если к конекту пришла не функция, а объёкт, то он сам делает dispatch и т.д. (см закомментированный код выше.)
+        //если Action Creator ы называются иначе, чем передаваемые функции, надо писать follow:followActionCreator,
+        follow,        
+        unfollow,
+        setUsers,
+        setCurrentPage,
+        setUsersCount,
+        toggleIsFetchig,
+    }
+    )(UsersContainer);

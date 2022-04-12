@@ -3,8 +3,10 @@ const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
+const FETCHING = 'FETCHING'; //Fetching - получение данных.
 
 let initialState = {
+    isFetching: false,
     pageSize: 30,
     totalUsersCount: 0,
     currentPage: 1,
@@ -63,6 +65,9 @@ const usersReducer = (state = initialState, action) => {
 
         case SET_TOTAL_COUNT:
             return { ...state, totalUsersCount: action.totalCount} 
+
+        case FETCHING:
+            return { ...state, isFetching: action.isFetching} //У Димана isFetching
         
         default:
             return state;
@@ -71,15 +76,18 @@ const usersReducer = (state = initialState, action) => {
 
 }
 
-export const setCurrentPageActionCreator = (pageNumber) => ({type: SET_CURRENT_PAGE, pageNumber})
+//ActionCreators
+export const setCurrentPage = (pageNumber) => ({type: SET_CURRENT_PAGE, pageNumber})
 
-export const setUsersCountActionCreator = (totalCount) =>({type: SET_TOTAL_COUNT, totalCount})
+export const setUsersCount = (totalCount) =>({type: SET_TOTAL_COUNT, totalCount})
 
-export const followActionCreator = (userID) => ({ type: FOLLOW, userID }) 
+export const follow = (userID) => ({ type: FOLLOW, userID }) 
 
-export const unfollowActionCreator = (userID) => ({ type: UNFOLLOW, userID}) 
+export const unfollow = (userID) => ({ type: UNFOLLOW, userID}) 
 
-export const setUsersActionCreator = (usersData) => ({ type: SET_USERS, usersData}) 
+export const setUsers = (usersData) => ({ type: SET_USERS, usersData}) 
+
+export const toggleIsFetchig = (isFetching) => ({ type: FETCHING, isFetching})
 
 
 
