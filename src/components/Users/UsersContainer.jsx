@@ -37,7 +37,7 @@ class UsersContainer extends React.Component {
             */
     
         componentDidMount () {        
-            this.props.toggleIsFetchig(true);
+            this.props.toggleIsFetchig(true); //отмечаем, что передаются данные чтобы отрисовать прелоадер
             axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
                 .then(response => {
                 let data = response.data.items;

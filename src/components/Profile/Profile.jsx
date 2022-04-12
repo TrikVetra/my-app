@@ -1,19 +1,13 @@
-import Autor from './Autor/Autor';
+
 import MyPostsContainer from './MyPosts/MyPosts/MyPostsContainer';
-import ProfileHeader from './ProfileHeader/ProfileHeader';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 
 const Profile = (props) => {
 
     return (
-        <div>
-            
-                <ProfileHeader />
-                <Autor />
-                <MyPostsContainer />
-
-                
-
-           
+        <div>            
+            <ProfileInfo profile={props.profile}/>
+            <MyPostsContainer />   
         </div>
     );
 }
