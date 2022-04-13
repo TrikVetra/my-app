@@ -7,7 +7,7 @@ const Autor = (props) => {
         return (<Preloader/>)
     } else  return (  
         <div className={classes.autor}>
-            <img alt='hear' src={props.profile.photos.large}></img>
+            <img alt='hear' src={props.profile.photos.large ? props.profile.photos.large: userPhoto}></img>
             <div className={classes.autor_description}>
                 <b>Имя:</b> {props.profile.fullName}<br></br>
                 <b>О себе:</b> {props.profile.aboutMe}<br></br>

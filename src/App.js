@@ -17,9 +17,13 @@ const App = (props) => {
         <Navbar />
         <div className="app_wrapper_content">
           <Routes>
-            <Route path='/profile' element={<ProfileContainer />} />
-            <Route path='/dialogs/*' element={<DialogsContainer />} /> 
-            <Route path='/users' element={ <UsersContainer /> } />    
+            {/* Если в конце пути /* значит вместо * может быть что угодно. Если * нет, то путь должен быть точным. */}
+            {/* После : написано имя параметра по которому можно обратиться с помощью withRoute (useParams) к части адреса */}
+            {/* ? означает, что параметр опциональный (может быть, а может нет) */}
+            <Route path='/profile/' element={<ProfileContainer/>}/> 
+            <Route path='/profile/:userId?' element={<ProfileContainer/>}/> 
+            <Route path='/dialogs/*' element={<DialogsContainer/>}/> 
+            <Route path='/users' element={<UsersContainer/>}/>    
           </Routes>
         </div>
       </div>
