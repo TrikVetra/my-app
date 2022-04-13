@@ -2,7 +2,7 @@ const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
-let inetialState = {   
+let initialState = {   
     postData: [
         { id: 1, message: 'My first post' },
         { id: 2, message: 'Расскажу о муравьях' },
@@ -13,7 +13,7 @@ let inetialState = {
 }
 
 
-const profileReducer = (state = inetialState, action) => {
+const profileReducer = (state = initialState, action) => {
     
     switch (action.type) {
         case ADD_POST: {    

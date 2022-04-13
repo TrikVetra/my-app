@@ -9,7 +9,6 @@ import {
 } from "../../redux/usersReducer";
 
 import React from 'react';
-import { render } from 'react-dom';
 import axios from 'axios';
 import Users from './Users';
 import Preloader from '../Common/Preloader';

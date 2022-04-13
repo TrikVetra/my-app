@@ -2,7 +2,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
-import Header from './components/Header/Header';
+import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
@@ -13,7 +13,7 @@ const App = (props) => {
   return (    
     <BrowserRouter>
       <div className="app_wrapper">
-        <Header />
+        <HeaderContainer />
         <Navbar />
         <div className="app_wrapper_content">
           <Routes>
