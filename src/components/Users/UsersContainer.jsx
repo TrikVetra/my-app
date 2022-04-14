@@ -12,6 +12,7 @@ import React from 'react';
 import axios from 'axios';
 import Users from './Users';
 import Preloader from '../Common/Preloader';
+import {usersAPI} from "../../api/api";
 
 
 class UsersContainer extends React.Component {
@@ -37,11 +38,9 @@ class UsersContainer extends React.Component {
     
         componentDidMount () {        
             this.props.toggleIsFetchig(true); //отмечаем, что передаются данные чтобы отрисовать прелоадер
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-                .then(response => {
-                let data = response.data.items;
-                this.props.setUsers(data);
-                this.props.setUsersCount(response.data.totalCount);
+            usersAPI.getUsers(this.props.currentPage,this.props.pageSize).then(data => {
+                this.props.setUsers(data.items);
+                this.props.setUsersCount(data.totalCount);
                 this.props.toggleIsFetchig(false);
                 }
             );    
@@ -50,10 +49,8 @@ class UsersContainer extends React.Component {
         onPageChanged = (pageNumber) => {
             this.props.setCurrentPage(pageNumber);
             this.props.toggleIsFetchig(true);
-            axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-                .then(response => {
-                let data = response.data.items;
-                this.props.setUsers(data);
+            usersAPI.getUsers(pageNumber,this.props.pageSize).then(data => {
+                this.props.setUsers(data.items);
                 this.props.toggleIsFetchig(false);
                 }
             );
@@ -65,8 +62,6 @@ class UsersContainer extends React.Component {
             
             {   
                 return <>
-                {/* <img src = {Preloader}/> */}
-                {/* {console.log(this.props)} */}
                 {this.props.isFetching ? <Preloader/> : null}
                 <Users totalUsersCount = {this.props.totalUsersCount}
                               pageSize = {this.props.pageSize}
