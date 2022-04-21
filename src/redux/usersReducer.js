@@ -1,17 +1,21 @@
-const FOLLOW = 'FOLLOW';
-const UNFOLLOW = 'UNFOLLOW';
-const SET_USERS = 'SET_USERS';
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
-const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT';
-const FETCHING = 'FETCHING'; //Fetching - получение данных.
+const FOLLOW = 'FOLLOW'
+const UNFOLLOW = 'UNFOLLOW'
+const SET_USERS = 'SET_USERS'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
+const FETCHING = 'FETCHING' //Fetching - получение данных.
+const FOLLOWING_IN_PROGRESS = 'FOLLOWING_IN_PROGRESS'
+
 
 let initialState = {
     isFetching: false,
+    followingInProgress: [],
     pageSize: 30,
     totalUsersCount: 0,
     currentPage: 1,
     usersData: [
-        // {
+        // Данные приходят с сервера, поэтому тут не нужны //
+        //{
         //     id: 1,
         //     photoURL: 'https://img.icons8.com/external-others-made-by-made/452/external-animals-zoo-others-made-by-made-58.png',
         //     followed: false, name: 'Tanya', status: 'Here', 
@@ -68,7 +72,15 @@ const usersReducer = (state = initialState, action) => {
 
         case FETCHING:
             return { ...state, isFetching: action.isFetching} //У Димана isFetching
-        
+
+        case FOLLOWING_IN_PROGRESS:
+            return { 
+                ...state, 
+                followingInProgress: action.isFetching 
+                ? [...state.followingInProgress, action.userID] // дописываем id в конец массива
+                : state.followingInProgress.filter(id => id != action.userID) //метод filter()создаёт новый массив со всеми элементами, прошедшими проверку, задаваемую в передаваемой функции
+            } 
+
         default:
             return state;
         
@@ -88,6 +100,8 @@ export const unfollow = (userID) => ({ type: UNFOLLOW, userID})
 export const setUsers = (usersData) => ({ type: SET_USERS, usersData}) 
 
 export const toggleIsFetchig = (isFetching) => ({ type: FETCHING, isFetching})
+
+export const toggleFollowing = (isFetching, userID) => ({type: FOLLOWING_IN_PROGRESS, isFetching, userID})
 
 
 

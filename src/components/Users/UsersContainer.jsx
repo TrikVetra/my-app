@@ -6,6 +6,7 @@ import {
     setCurrentPage,
     setUsersCount,
     toggleIsFetchig,
+    toggleFollowing,
 } from "../../redux/usersReducer";
 
 import React from 'react';
@@ -63,13 +64,15 @@ class UsersContainer extends React.Component {
             {   
                 return <>
                 {this.props.isFetching ? <Preloader/> : null}
-                <Users totalUsersCount = {this.props.totalUsersCount}
-                              pageSize = {this.props.pageSize}
-                              currentPage = {this.props.currentPage}
-                              onPageChanged = {this.onPageChanged}
-                              usersData = {this.props.usersData}
-                              unfollow = {this.props.unfollow}
-                              follow = {this.props.follow}
+                <Users  totalUsersCount = {this.props.totalUsersCount}
+                        pageSize = {this.props.pageSize}
+                        currentPage = {this.props.currentPage}
+                        onPageChanged = {this.onPageChanged}
+                        usersData = {this.props.usersData}
+                        unfollow = {this.props.unfollow}
+                        follow = {this.props.follow}
+                        followingInProgress = {this.props.followingInProgress}
+                        toggleFollowing = {this.props.toggleFollowing}
                               />                                
                 </>                  
             }       
@@ -82,10 +85,14 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
+        followingInProgress: state.usersPage.followingInProgress,
     }
 }
 
-// let mapDispatchToProps = (dispatch) => {
+// -------connect цепляет "dispatch" за кадром, если вторым параметром передать объект, как показано ниже. 
+// -------по сути это будет аналогично коду, приведённому тут.
+//
+//let mapDispatchToProps = (dispatch) => {
 //     return {
 //         follow: (userID) => { 
 //             dispatch(followActionCreator(userID));
@@ -118,5 +125,6 @@ export default connect (mapStateToProps,
         setCurrentPage,
         setUsersCount,
         toggleIsFetchig,
+        toggleFollowing,
     }
     )(UsersContainer);
