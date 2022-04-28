@@ -1,13 +1,12 @@
 import { connect } from "react-redux";
 import { 
     follow, 
-    unfollow, 
-    setUsers, 
+    unfollow,
     setCurrentPage,
-    setUsersCount,
-    toggleIsFetchig,
     toggleFollowing,
     getUsersThunkCreator,
+    unfollowThunkCreator,
+    followThunkCreator,
 } from "../../redux/usersReducer";
 
 import React from 'react';
@@ -24,6 +23,13 @@ class UsersContainer extends React.Component {
     
         onPageChanged = (pageNumber) => {
             this.props.getUsersThunkCreator(pageNumber,this.props.pageSize)
+            this.props.setCurrentPage(pageNumber);
+            // this.props.toggleIsFetchig(true);
+            // usersAPI.getUsers(pageNumber,this.props.pageSize).then(data => {
+            //     this.props.setUsers(data.items);
+            //     this.props.toggleIsFetchig(false);
+            //     }
+            // );
         }   
     
             render()
@@ -39,7 +45,8 @@ class UsersContainer extends React.Component {
                         unfollow = {this.props.unfollow}
                         follow = {this.props.follow}
                         followingInProgress = {this.props.followingInProgress}
-                        toggleFollowing = {this.props.toggleFollowing}
+                        unfollowThunkCreator = {this.props.unfollowThunkCreator}
+                        followThunkCreator = {this.props.followThunkCreator}
                               />                                
                 </>                  
             }       
@@ -88,11 +95,10 @@ export default connect (mapStateToProps,
         //если Action Creator ы называются иначе, чем передаваемые функции, надо писать follow:followActionCreator,
         follow,        
         unfollow,
-        setUsers,
         setCurrentPage,
-        setUsersCount,
-        toggleIsFetchig,
         toggleFollowing,
         getUsersThunkCreator,
+        followThunkCreator,
+        unfollowThunkCreator,
     }
     )(UsersContainer);

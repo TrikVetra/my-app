@@ -41,28 +41,9 @@ let Users = (props) => {
                     <div>
                         {user.followed
                             ? <button disabled={props.followingInProgress.some(id => id === user.id)}    //метод some() проверяет удовлетворяет ли какой-либо элемент массива условию, заданному в передаваемой функции.                        
-                            onClick={() => {
-                                props.toggleFollowing(true, user.id)
-                                usersAPI.unfollowUser(user.id).then(data => {
-                                    if (data.resultCode === 0) { //resultCode == 0 означает что операция выполнена успешно.
-                                        props.unfollow(user.id)
-                                    }
-                                    props.toggleFollowing(false, user.id)
-                                }
-                                )
-
-                            }}> Follow </button>
+                            onClick={() => { props.unfollowThunkCreator(user.id) }}> Follow </button>
                             : <button disabled={props.followingInProgress.some(id => id === user.id)} 
-                            onClick={() => {
-                                props.toggleFollowing(true, user.id)
-                                usersAPI.followUser(user.id).then(data => {
-                                    if (data.resultCode === 0) { //resultCode == 0 означает что операция выполнена успешно.
-                                        props.follow(user.id)
-                                    }
-                                    props.toggleFollowing(false, user.id)
-                                }
-                                )
-                            }}> Unfollow </button>}
+                            onClick={() => { props.followThunkCreator(user.id) }}> Unfollow </button>}
                     </div>
                 </span>
                 <span>
