@@ -1,4 +1,4 @@
-import { headerAPI } from "../api/api";
+import { authAPI } from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
@@ -34,7 +34,7 @@ export const setUserData = (id, email, login) =>
 //ThunkCreators
 export const getCurrentUserThunkCreator = () => {
     return (dispatch) => {
-        headerAPI.getCurrentUser()
+        authAPI.getCurrentUser()
             .then(response => {
                 if (response.data.resultCode === 0){
                     dispatch(setUserData(response.data.data.id,response.data.data.email,response.data.data.login))                    

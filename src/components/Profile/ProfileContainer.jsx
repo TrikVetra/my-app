@@ -3,13 +3,17 @@ import axios from "axios";
 import {connect} from "react-redux";
 
 import Profile from "./Profile";
-import {setUserProfile} from "../../redux/profileReducer";
+import {
+    setUserProfile,
+    getCurrentUserDataThunkCreator,
+} from "../../redux/profileReducer";
 
 import { //В React6 вместо import withRouter нужно импортировать вот так... почему так сложно пока не совсем понятно.
     useLocation,
     useNavigate,
     useParams
   } from "react-router-dom";
+import { profileAPI } from "../../api/api";
   
 function withRouter(Component) {
     function ComponentWithRouterProp(props) {
@@ -26,8 +30,6 @@ function withRouter(Component) {
     return ComponentWithRouterProp;
 }
 
-
-
 class ProfileContainer extends React.Component {
 
     componentDidMount(){
@@ -37,12 +39,14 @@ class ProfileContainer extends React.Component {
         console.log(userId);
         if (!userId){
             userId="2";
-        }      
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+ userId)
-            .then(response => {                
-            this.props.setUserProfile(response.data);                
-            }
-        );            
+        }
+        this.props.getCurrentUserDataThunkCreator(userId)  
+        // profileAPI.getCurrentUserData(userId)    
+        // // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+ userId)
+        //      .then(response => {                
+        //      this.props.setUserProfile(response.data);                
+        //      }
+        // );            
     }
     
 
@@ -63,4 +67,8 @@ let mapStateToProps = (state) => {
 
 let WithUrlDataContainerComponent = withRouter (ProfileContainer); //Обёртка для получения данных из URL
  
-export default connect(mapStateToProps,{setUserProfile}) (WithUrlDataContainerComponent); //Обёртка для получения данных из Store
+export default connect(mapStateToProps,
+    {
+        setUserProfile,
+        getCurrentUserDataThunkCreator,
+    }) (WithUrlDataContainerComponent); //Обёртка для получения данных из Store

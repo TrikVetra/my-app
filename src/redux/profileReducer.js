@@ -1,3 +1,5 @@
+import { profileAPI } from "../api/api";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'SET_USER_PROFILE';
@@ -42,6 +44,8 @@ const profileReducer = (state = initialState, action) => {
     
 }
 
+
+//ActionCreators
 export const addPostActionCreator = () =>  
     ({type: ADD_POST,}) //return type
     
@@ -53,5 +57,18 @@ export const updateNewPostTextActionCreator = (text) => //return type, newText
     })
 
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
+
+
+//ThunkCreators
+export const getCurrentUserDataThunkCreator = (userId) => {
+    return (dispatch) => {
+        profileAPI.getCurrentUserData(userId)    
+        // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+ userId)
+             .then(response => {                
+             dispatch(setUserProfile(response.data))           
+             }
+        ); 
+    }
+}
 
 export default profileReducer;

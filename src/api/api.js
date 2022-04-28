@@ -22,12 +22,15 @@ export const usersAPI = {
     }
 }
 
-export const headerAPI = {
-    getCurrentUser (){
+export const authAPI = {
+    getCurrentUser () {
         return instance.get(`/auth/me`)
-        .then (response => response)
     }
 }
 
-
+export const profileAPI = {
+    getCurrentUserData (id) {
+        return instance.get(`profile/`+ id)
+    }
+}
 

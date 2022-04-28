@@ -8,23 +8,19 @@ import {
     setUserData,
     getCurrentUserThunkCreator,
 } from '../../redux/authReducer'
-import { headerAPI } from '../../api/api';
+import { authAPI } from '../../api/api';
 
 class HeaderContainer extends React.Component {
     
-    componentDidMount () {        
-        //this.props.toggleIsFetchig(true); //отмечаем, что передаются данные чтобы отрисовать прелоадер
-        headerAPI.getCurrentUser()
-        // axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,
-        // {withCredentials:true}//отправляет куки, чтобы подтвердить авторизацию
-        // )
-            .then(response => {
-                if (response.data.resultCode === 0){
-                    this.props.setUserData(response.data.data.id,response.data.data.email,response.data.data.login);
-                    
-                }            
-            }
-        );    
+    componentDidMount () {
+        this.props.getCurrentUserThunkCreator()    
+        // authAPI.getCurrentUser()
+        //     .then(response => {
+        //         if (response.data.resultCode === 0){
+        //             this.props.setUserData(response.data.data.id,response.data.data.email,response.data.data.login);                    
+        //         }            
+        //     }
+        // );    
     }
 
     render(){
@@ -32,8 +28,7 @@ class HeaderContainer extends React.Component {
     }
 }
 
-let mapStateToProps = (state) => ({
-    
+let mapStateToProps = (state) => ({    
     isAuth: state.auth.isAuth,
     login: state.auth.login,
 })
