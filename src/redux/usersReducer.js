@@ -1,3 +1,5 @@
+import {usersAPI} from "../api/api"
+
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
@@ -90,18 +92,26 @@ const usersReducer = (state = initialState, action) => {
 
 //ActionCreators
 export const setCurrentPage = (pageNumber) => ({type: SET_CURRENT_PAGE, pageNumber})
-
 export const setUsersCount = (totalCount) =>({type: SET_TOTAL_COUNT, totalCount})
-
 export const follow = (userID) => ({ type: FOLLOW, userID }) 
-
-export const unfollow = (userID) => ({ type: UNFOLLOW, userID}) 
-
-export const setUsers = (usersData) => ({ type: SET_USERS, usersData}) 
-
+export const unfollow = (userID) => ({ type: UNFOLLOW, userID})
+export const setUsers = (usersData) => ({ type: SET_USERS, usersData})
 export const toggleIsFetchig = (isFetching) => ({ type: FETCHING, isFetching})
-
 export const toggleFollowing = (isFetching, userID) => ({type: FOLLOWING_IN_PROGRESS, isFetching, userID})
+
+//ThunkCreators
+export const getUsersThunkCreator = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetchig(true)) //отмечаем, что передаются данные чтобы отрисовать прелоадер
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(setUsers(data.items))
+            dispatch(setUsersCount(data.totalCount))
+            dispatch(toggleIsFetchig(false))
+        }
+        );
+    }
+}
+
 
 
 

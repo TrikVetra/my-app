@@ -1,8 +1,9 @@
-import { combineReducers, createStore } from "redux";
-import profileReducer from "./profileReducer";
-import dialogReducer from "./dialogReducer";
-import usersReducer from "./usersReducer";
-import authReducer from "./authReducer";
+import { applyMiddleware, combineReducers, createStore } from "redux"
+import profileReducer from "./profileReducer"
+import dialogReducer from "./dialogReducer"
+import usersReducer from "./usersReducer"
+import authReducer from "./authReducer"
+import thunkMiddleware from  "redux-thunk"
 
 let redusers = combineReducers({
     profilePage: profileReducer,
@@ -11,8 +12,8 @@ let redusers = combineReducers({
     auth:        authReducer,
 });
 
-let store = createStore(redusers);
+let store = createStore(redusers, applyMiddleware(thunkMiddleware)) //applyMiddleware нужно чтобы диспатчить функции-Thunkи
 
-window.store = store;
+window.store = store
 
-export default store;
+export default store

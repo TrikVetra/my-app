@@ -7,6 +7,7 @@ import {
     setUsersCount,
     toggleIsFetchig,
     toggleFollowing,
+    getUsersThunkCreator,
 } from "../../redux/usersReducer";
 
 import React from 'react';
@@ -37,14 +38,15 @@ class UsersContainer extends React.Component {
             https://social-network.samuraijs.com/api/1.0/users?page=2&count=3
             */
     
-        componentDidMount () {        
-            this.props.toggleIsFetchig(true); //отмечаем, что передаются данные чтобы отрисовать прелоадер
-            usersAPI.getUsers(this.props.currentPage,this.props.pageSize).then(data => {
-                this.props.setUsers(data.items);
-                this.props.setUsersCount(data.totalCount);
-                this.props.toggleIsFetchig(false);
-                }
-            );    
+        componentDidMount () {   
+            this.props.getUsersThunkCreator(this.props.currentPage,this.props.pageSize);     
+            // this.props.toggleIsFetchig(true); //отмечаем, что передаются данные чтобы отрисовать прелоадер
+            // usersAPI.getUsers(this.props.currentPage,this.props.pageSize).then(data => {
+            //     this.props.setUsers(data.items);
+            //     this.props.setUsersCount(data.totalCount);
+            //     this.props.toggleIsFetchig(false);
+            //     }
+            // );    
         }
     
         onPageChanged = (pageNumber) => {
@@ -126,5 +128,6 @@ export default connect (mapStateToProps,
         setUsersCount,
         toggleIsFetchig,
         toggleFollowing,
+        getUsersThunkCreator,
     }
     )(UsersContainer);
