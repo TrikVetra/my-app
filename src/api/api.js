@@ -18,7 +18,14 @@ export const usersAPI = {
     },
     followUser (id){
         return instance.post(`follow/${id}`)
-        .then (response => response.data); //Возвращаем только response.data, а не весь response   
+        .then (response => response.data) //Возвращаем только response.data, а не весь response   
+    }
+}
+
+export const headerAPI = {
+    getCurrentUser (){
+        return instance.get(`/auth/me`)
+        .then (response => response)
     }
 }
 

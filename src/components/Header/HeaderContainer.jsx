@@ -4,16 +4,20 @@ import axios from 'axios';
 import Header from "./Header";
 import { connect } from 'react-redux';
 
-import {setUserData} from '../../redux/authReducer'
+import {
+    setUserData,
+    getCurrentUserThunkCreator,
+} from '../../redux/authReducer'
+import { headerAPI } from '../../api/api';
 
 class HeaderContainer extends React.Component {
     
     componentDidMount () {        
         //this.props.toggleIsFetchig(true); //отмечаем, что передаются данные чтобы отрисовать прелоадер
-        
-        axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,
-        {withCredentials:true}//отправляет куки, чтобы подтвердить авторизацию
-        )
+        headerAPI.getCurrentUser()
+        // axios.get(`https://social-network.samuraijs.com/api/1.0/auth/me`,
+        // {withCredentials:true}//отправляет куки, чтобы подтвердить авторизацию
+        // )
             .then(response => {
                 if (response.data.resultCode === 0){
                     this.props.setUserData(response.data.data.id,response.data.data.email,response.data.data.login);
@@ -34,4 +38,8 @@ let mapStateToProps = (state) => ({
     login: state.auth.login,
 })
 
-export default connect(mapStateToProps,{setUserData}) (HeaderContainer)
+export default connect(mapStateToProps,
+    {
+        setUserData,
+        getCurrentUserThunkCreator,
+    }) (HeaderContainer)
