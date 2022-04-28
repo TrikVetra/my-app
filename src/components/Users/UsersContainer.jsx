@@ -11,55 +11,20 @@ import {
 } from "../../redux/usersReducer";
 
 import React from 'react';
-import axios from 'axios';
 import Users from './Users';
 import Preloader from '../Common/Preloader';
 import {usersAPI} from "../../api/api";
 
 
 class UsersContainer extends React.Component {
-
-    /*
-            Query Parameters
-            
-            count: (integer - default: 10 - maximum: 100)
-            page size (how many items will be returned in response)
-    
-            page: (integer - default: 1)
-            number of portion of items
-    
-            term: (string)
-            user name string for searching
-    
-            friend: (boolean)
-            if true, then find only followed users, false - only not followed users, if omit parameter - all users
-    
-            example:
-            https://social-network.samuraijs.com/api/1.0/users?page=2&count=3
-            */
     
         componentDidMount () {   
-            this.props.getUsersThunkCreator(this.props.currentPage,this.props.pageSize);     
-            // this.props.toggleIsFetchig(true); //отмечаем, что передаются данные чтобы отрисовать прелоадер
-            // usersAPI.getUsers(this.props.currentPage,this.props.pageSize).then(data => {
-            //     this.props.setUsers(data.items);
-            //     this.props.setUsersCount(data.totalCount);
-            //     this.props.toggleIsFetchig(false);
-            //     }
-            // );    
+            this.props.getUsersThunkCreator(this.props.currentPage,this.props.pageSize)
         }
     
         onPageChanged = (pageNumber) => {
-            this.props.setCurrentPage(pageNumber);
-            this.props.toggleIsFetchig(true);
-            usersAPI.getUsers(pageNumber,this.props.pageSize).then(data => {
-                this.props.setUsers(data.items);
-                this.props.toggleIsFetchig(false);
-                }
-            );
-        }    
-
-        
+            this.props.getUsersThunkCreator(pageNumber,this.props.pageSize)
+        }   
     
             render()
             
