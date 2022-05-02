@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import {connect} from "react-redux";
 
 import Profile from "./Profile";
@@ -8,22 +7,22 @@ import {
     getCurrentUserDataThunkCreator,
 } from "../../redux/profileReducer";
 
-import { //В React6 вместо import withRouter нужно импортировать вот так... почему так сложно пока не совсем понятно.
-    useLocation,
-    useNavigate,
+import { //В React6 вместо import withRouter нужно импортировать вот так, чтобы достать id текущего пользователя и прочее.
+    // useLocation,
+    // useNavigate,
     useParams
-  } from "react-router-dom";
-import { profileAPI } from "../../api/api";
-  
+  } from "react-router-dom";  
+
 function withRouter(Component) {
     function ComponentWithRouterProp(props) {
-        let location = useLocation();
-        let navigate = useNavigate();
+        // let location = useLocation();
+        // let navigate = useNavigate();
         let params = useParams();
+        
         return (
             <Component
                 {...props}
-                router={{ location, navigate, params }}
+                router={{  params }}
             />
         );
     }
@@ -35,10 +34,11 @@ class ProfileContainer extends React.Component {
     componentDidMount(){
         //this.props.toggleIsFetchig(true); //отмечаем, что передаются данные чтобы отрисовать прелоадер
         
-        let userId = this.props.router.params.userId; 
+        console.log(this.props)
+        let userId = this.props.router.params.userId; //Определяем id пользователя на который щелкнули на странице пользователей
         console.log(userId);
-        if (!userId){
-            userId="2";
+        if (!userId){ //Если перешли с главной, подставляем id текущего авторизованного пользователя.
+            userId=this.props.auth.id;
         }
         this.props.getCurrentUserDataThunkCreator(userId)  
         // profileAPI.getCurrentUserData(userId)    
@@ -47,8 +47,7 @@ class ProfileContainer extends React.Component {
         //      this.props.setUserProfile(response.data);                
         //      }
         // );            
-    }
-    
+    }    
 
     render() {
         
@@ -61,7 +60,9 @@ class ProfileContainer extends React.Component {
 let mapStateToProps = (state) => {
     
     return {
-       profile : state.profilePage.profile,        
+       profile: state.profilePage.profile, 
+       auth: state.auth,
+       isAuth: state.auth.isAuth,       
     }
 }
 

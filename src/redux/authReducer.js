@@ -5,12 +5,10 @@ const SET_USER_DATA = 'SET_USER_DATA';
 
 let initialState = {  
     isFetching: false, 
-    userData: {
-        id: null,
-        email: null,
-        login: null,
-        isAuth: false,
-      }
+    id: null,
+    email: null,
+    login: null,
+    isAuth: false,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -18,9 +16,9 @@ const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER_DATA:  
             return {
-                ...state,      // возвращаем копию состояния
+                ...state,      // возвращаем копию состояния                
                 ...action.userData,
-                isAuth:true,
+                isAuth: true,
             };        
         default:
             return state;
@@ -37,7 +35,8 @@ export const getCurrentUserThunkCreator = () => {
         authAPI.getCurrentUser()
             .then(response => {
                 if (response.data.resultCode === 0){
-                    dispatch(setUserData(response.data.data.id,response.data.data.email,response.data.data.login))                    
+                    let {id, login, email} = response.data.data
+                    dispatch(setUserData(id,email,login))                    
                 }            
             }
         );

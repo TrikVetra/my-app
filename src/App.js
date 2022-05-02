@@ -6,7 +6,7 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
-
+import LoginPage from './components/Login/Login'
 
 
 const App = (props) => {  
@@ -21,9 +21,10 @@ const App = (props) => {
             {/* После : написано имя параметра по которому можно обратиться с помощью withRoute (useParams) к части адреса */}
             {/* ? означает, что параметр опциональный (может быть, а может нет) */}
             <Route path='/profile/' element={<ProfileContainer/>}/> 
-            <Route path='/profile/:userId?' element={<ProfileContainer/>}/> 
+            <Route path='/profile/:userId' element={<ProfileContainer/>}/> 
             <Route path='/dialogs/*' element={<DialogsContainer/>}/> 
             <Route path='/users' element={<UsersContainer/>}/>    
+            <Route path='/login' element={<LoginPage/>}/>
           </Routes>
         </div>
       </div>

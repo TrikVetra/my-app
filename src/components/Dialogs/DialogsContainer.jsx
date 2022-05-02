@@ -3,8 +3,10 @@ import Dialogs from "./Dialogs";
 import {connect} from 'react-redux';
 
 let mapStateToProps = (state) => { //Передаёт данные
+    
 return{
     dialogsPage: state.dialogsPage,
+    isAuth: state.auth.isAuth,
 }
 }
 

@@ -1,7 +1,8 @@
-import DialogItem from "./DialogItem/DialogItem";
-import classes from './Dialogs.module.css';
-import MessageItem from './MessageItem/MessageItem';
-import React from 'react';
+import DialogItem from "./DialogItem/DialogItem"
+import classes from './Dialogs.module.css'
+import MessageItem from './MessageItem/MessageItem'
+import React from 'react'
+import { Navigate } from "react-router-dom"
 
 const Dialogs = (props) => {
     
@@ -16,18 +17,19 @@ const Dialogs = (props) => {
         messages => <MessageItem id = {messages.id} message = {messages.message} key = {messages.id}/>
     )
  
-    let newMessageElement = React.createRef();
+    let newMessageElement = React.createRef()
 
     let addNewMessage = () => {    
         props.addMessage();           
     }
 
     let onMessageChange = () => {
-        let text = newMessageElement.current.value;
-        props.updateNewMessageText (text);
+        let text = newMessageElement.current.value
+        props.updateNewMessageText (text)
     }
-
-    return (
+    
+    if (props.isAuth === false) return <Navigate to="/login" />
+    else return (
         <div className = {classes.Dialogs}>
 
             <div className = {classes.Dialog_items}>
