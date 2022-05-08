@@ -1,8 +1,8 @@
 import {addMessageActionCreator, updateNewMessageTextActionCreator} from '../../redux/dialogReducer'
 import Dialogs from "./Dialogs";
 import {connect} from 'react-redux';
-import { Navigate } from "react-router-dom"
 import {withAuthRedirect} from "../../hoc/withAuthRedirect"
+import { compose } from 'redux';
 
 let mapStateToProps = (state) => { //Передаёт данные
     
@@ -24,9 +24,9 @@ return {
 }
 }
 
-//Это HOC который редиректит на другую страницу если пользователь не авторизован.
-let AuthRedirectComponent = withAuthRedirect(Dialogs)
-
-const DialogsContainer = connect(mapStateToProps,mapDispatchToProps)(AuthRedirectComponent);
-
-export default DialogsContainer;
+export default 
+//По сути "оборачивает вызовы в конвейер". Взять последнюю (Dialogs), передать в параметр предыдущей, повторить.
+compose(
+    connect(mapStateToProps,mapDispatchToProps),
+    withAuthRedirect,
+    )(Dialogs)

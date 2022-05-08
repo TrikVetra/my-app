@@ -1,12 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import { Navigate } from "react-router-dom"
 
 import Profile from "./Profile";
 import {
     setUserProfile,
     getCurrentUserDataThunkCreator,
 } from "../../redux/profileReducer";
+import { compose } from 'redux';
 
 import { //В React6 вместо import withRouter нужно импортировать вот так, чтобы достать id текущего пользователя и прочее.
     // useLocation,
@@ -60,8 +60,7 @@ class ProfileContainer extends React.Component {
     }
 }
 
-//Это HOC который редиректит на другую страницу если пользователь не авторизован.
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
+
 
 let mapStateToProps = (state) => {    
     return {
@@ -70,10 +69,13 @@ let mapStateToProps = (state) => {
     }
 }
 
-let WithUrlDataContainerComponent = withRouter (AuthRedirectComponent); //Обёртка для получения данных из URL
-
-export default connect(mapStateToProps,
-    {
-        setUserProfile,
-        getCurrentUserDataThunkCreator,
-    }) (WithUrlDataContainerComponent); //Обёртка для получения данных из Store
+export default 
+compose (
+    connect(mapStateToProps,
+        {
+            setUserProfile,
+            getCurrentUserDataThunkCreator,
+        }),
+    withRouter,
+    withAuthRedirect,
+)(ProfileContainer)
