@@ -2,12 +2,12 @@ import {addMessageActionCreator, updateNewMessageTextActionCreator} from '../../
 import Dialogs from "./Dialogs";
 import {connect} from 'react-redux';
 import { Navigate } from "react-router-dom"
+import {withAuthRedirect} from "../../hoc/withAuthRedirect"
 
 let mapStateToProps = (state) => { //Передаёт данные
     
 return{
     dialogsPage: state.dialogsPage,
-    isAuth: state.auth.isAuth,
 }
 }
 
@@ -25,10 +25,7 @@ return {
 }
 
 //Это HOC который редиректит на другую страницу если пользователь не авторизован.
-let AuthRedirectComponent = (props) => { 
-    if (!props.isAuth) return <Navigate to="/login" />
-    return <Dialogs {...props}/>
-}
+let AuthRedirectComponent = withAuthRedirect(Dialogs)
 
 const DialogsContainer = connect(mapStateToProps,mapDispatchToProps)(AuthRedirectComponent);
 

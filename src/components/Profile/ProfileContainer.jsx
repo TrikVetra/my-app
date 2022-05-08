@@ -14,6 +14,8 @@ import { //В React6 вместо import withRouter нужно импортир�
     useParams
   } from "react-router-dom";  
 
+import {withAuthRedirect} from "../../hoc/withAuthRedirect"
+
 function withRouter(Component) {
     function ComponentWithRouterProp(props) {
         // let location = useLocation();
@@ -59,22 +61,17 @@ class ProfileContainer extends React.Component {
 }
 
 //Это HOC который редиректит на другую страницу если пользователь не авторизован.
-let AuthRedirectComponent = (props) => { 
-    if (!props.isAuth) return <Navigate to="/login" />
-    return <ProfileContainer {...props}/>
-}
+let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
 
-let mapStateToProps = (state) => {
-    
+let mapStateToProps = (state) => {    
     return {
        profile: state.profilePage.profile, 
        auth: state.auth,
-       isAuth: state.auth.isAuth,       
     }
 }
 
 let WithUrlDataContainerComponent = withRouter (AuthRedirectComponent); //Обёртка для получения данных из URL
- 
+
 export default connect(mapStateToProps,
     {
         setUserProfile,
