@@ -1,6 +1,7 @@
 import {addMessageActionCreator, updateNewMessageTextActionCreator} from '../../redux/dialogReducer'
 import Dialogs from "./Dialogs";
 import {connect} from 'react-redux';
+import { Navigate } from "react-router-dom"
 
 let mapStateToProps = (state) => { //Передаёт данные
     
@@ -23,6 +24,12 @@ return {
 }
 }
 
-const DialogsContainer = connect(mapStateToProps,mapDispatchToProps)(Dialogs);
+//Это HOC который редиректит на другую страницу если пользователь не авторизован.
+let AuthRedirectComponent = (props) => { 
+    if (!props.isAuth) return <Navigate to="/login" />
+    return <Dialogs {...props}/>
+}
+
+const DialogsContainer = connect(mapStateToProps,mapDispatchToProps)(AuthRedirectComponent);
 
 export default DialogsContainer;

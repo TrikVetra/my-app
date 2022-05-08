@@ -28,8 +28,8 @@ const Dialogs = (props) => {
         props.updateNewMessageText (text)
     }
     
-    if (props.isAuth === false) return <Navigate to="/login" />
-    else return (
+    //if (props.isAuth === false) return <Navigate to="/login" />
+    return (
         <div className = {classes.Dialogs}>
 
             <div className = {classes.Dialog_items}>

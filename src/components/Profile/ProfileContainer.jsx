@@ -1,5 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
+import { Navigate } from "react-router-dom"
 
 import Profile from "./Profile";
 import {
@@ -57,6 +58,12 @@ class ProfileContainer extends React.Component {
     }
 }
 
+//Это HOC который редиректит на другую страницу если пользователь не авторизован.
+let AuthRedirectComponent = (props) => { 
+    if (!props.isAuth) return <Navigate to="/login" />
+    return <ProfileContainer {...props}/>
+}
+
 let mapStateToProps = (state) => {
     
     return {
@@ -66,7 +73,7 @@ let mapStateToProps = (state) => {
     }
 }
 
-let WithUrlDataContainerComponent = withRouter (ProfileContainer); //Обёртка для получения данных из URL
+let WithUrlDataContainerComponent = withRouter (AuthRedirectComponent); //Обёртка для получения данных из URL
  
 export default connect(mapStateToProps,
     {
