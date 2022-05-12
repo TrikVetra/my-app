@@ -77,5 +77,5 @@ compose (
             getCurrentUserDataThunkCreator,
         }),
     withRouter,
-    withAuthRedirect,
+    //withAuthRedirect,
 )(ProfileContainer)
