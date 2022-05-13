@@ -9,6 +9,8 @@ const Profile = (props) => {
     return (
         <div>            
             <ProfileInfo profile={props.profile}
+                         status={props.status}
+                         updateStatus={props.updateStatus}   
                          auth={props.auth}/>
             <MyPostsContainer />   
         </div>

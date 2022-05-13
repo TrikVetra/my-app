@@ -9,7 +9,7 @@ class ProfileStatus extends React.Component {
     activateEditMode = () => { //Если объявить метод классовой функции "стандартно", а не через стрелочную, то надо его отдельно байндить, иначе потеряется this.
         //this.state.editMode = true
         //this.forceUpdate() //Намёк реакту, что изменился state и надо бы его перерисовать. "Топорный метод". Надо избегать.
-
+        
         this.setState({ //Правильно так. Это асинхронный метод.
             editMode: true
         })

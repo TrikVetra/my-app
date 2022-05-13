@@ -5,7 +5,7 @@ const ProfileInfo = (props) => {
     return (
         <div>
             <ProfileHeader />
-            <Autor profile={props.profile}/>
+            <Autor profile={props.profile} status={props.status} updateStatus={props.updateStatus}/>
         </div>
     )
 }

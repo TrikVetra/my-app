@@ -8,7 +8,7 @@ const Autor = (props) => {
         return (<Preloader/>)
     } else  return (  
         <>
-        <ProfileStatus status={"Hello, my friends"}/>
+        <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
         <div className={classes.autor}>
             
             <img alt='hear' src={props.profile.photos.large ? props.profile.photos.large: userPhoto}></img>
