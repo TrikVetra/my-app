@@ -50,7 +50,7 @@ class ProfileContainer extends React.Component {
         //      this.props.setUserProfile(response.data);                
         //      }
         // ); 
-        this.props.getStatusThunkCreator(userId)
+            this.props.getStatusThunkCreator(userId)
         
     }    
 

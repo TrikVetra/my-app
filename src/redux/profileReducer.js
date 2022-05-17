@@ -82,12 +82,8 @@ export const getStatusThunkCreator = (userId) => {
     
     return (dispatch) => {
         profileAPI.getStatus(userId)    
-             .then(response => {   
-                    if (response.data != null){              
-                    dispatch(setStatus(response.data))   
-                    } else {
-                        dispatch(setStatus("Don't worry, be happy"))
-                    }   
+             .then(response => {                
+                    dispatch(setStatus(response.data)) 
              }
         ); 
     }
@@ -98,7 +94,7 @@ export const updateStatusThunkCreator = (status) => {
         profileAPI.updateStatus(status)    
              .then(response => {  
                 if (response.data.resultCode === 0){              
-                    dispatch(setStatus(response.data))   
+                    dispatch(setStatus(status))   
                 }        
              }
         ); 
