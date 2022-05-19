@@ -5,7 +5,7 @@ const SET_USER_DATA = 'SET_USER_DATA';
 
 let initialState = {  
     isFetching: false, 
-    id: null,
+    id: 23392,
     email: null,
     login: null,
     isAuth: false,
@@ -14,7 +14,7 @@ let initialState = {
 const authReducer = (state = initialState, action) => {
     
     switch (action.type) {
-        case SET_USER_DATA:  
+        case SET_USER_DATA: 
             return {
                 ...state,      // возвращаем копию состояния                
                 ...action.userData,

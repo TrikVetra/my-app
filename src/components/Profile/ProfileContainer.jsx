@@ -8,6 +8,7 @@ import {
     getStatusThunkCreator,
     updateStatusThunkCreator
 } from "../../redux/profileReducer";
+import {getCurrentUserThunkCreator} from '../../redux/authReducer'
 import { compose } from 'redux';
 
 import { //В React6 вместо import withRouter нужно импортировать вот так, чтобы достать id текущего пользователя и прочее.
@@ -40,8 +41,9 @@ class ProfileContainer extends React.Component {
         
         let userId = this.props.router.params.userId; //Определяем id пользователя на который щелкнули на странице пользователей
         
-        if (!userId){ //Если перешли с главной, подставляем id текущего авторизованного пользователя.
-            userId=this.props.auth.id;
+        if (userId == null){ //Если перешли с главной, подставляем id текущего авторизованного пользователя.
+                userId=this.props.auth.id;
+                console.log (userId)
         }
         this.props.getCurrentUserDataThunkCreator(userId)  
         // profileAPI.getCurrentUserData(userId)    
@@ -50,7 +52,7 @@ class ProfileContainer extends React.Component {
         //      this.props.setUserProfile(response.data);                
         //      }
         // ); 
-            this.props.getStatusThunkCreator(userId)
+        this.props.getStatusThunkCreator(userId)
         
     }    
 

@@ -30,6 +30,14 @@ class ProfileStatus extends React.Component {
         })
     }
 
+    componentDidUpdate (prevProps, prevState) { //Компонента жизненного цикла, вызываемая, когда обновилась компонента. prevProps и prevState приходят по умолчанию.
+        if (this.props.status !== prevProps.status) {
+            this.setState({
+                status: this.props.status
+            })
+        }
+    }
+
     render() {
         return (
             <div>
