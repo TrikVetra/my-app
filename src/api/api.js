@@ -32,13 +32,17 @@ export const profileAPI = {
     getCurrentUserData (id) {
         return instance.get(`profile/`+ id)
     },
-    getStatus (id) {
-        
+    getStatus (id) {        
         return instance.get(`profile/status/` + id)
     },
     updateStatus (status) {
         return instance.put(`profile/status/`, {status})
     }
-
 }
 
+//API для логина
+export const loginAPI = { 
+    loginUser (userData) { //usehData {email, password, rememberMe, capcha}
+        return instance.post(`/auth/login`, {userData})
+    } 
+}

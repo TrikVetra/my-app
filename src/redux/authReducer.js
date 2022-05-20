@@ -9,10 +9,10 @@ let initialState = {
     email: null,
     login: null,
     isAuth: false,
+    rememberMe: false,
 }
 
-const authReducer = (state = initialState, action) => {
-    
+const authReducer = (state = initialState, action) => {    
     switch (action.type) {
         case SET_USER_DATA: 
             return {
@@ -40,6 +40,17 @@ export const getCurrentUserThunkCreator = () => {
                 }            
             }
         );
+    }
+}
+
+export const userLoginThunkCreator = (userData) => { 
+    return (dispatch) => {
+        authAPI.loginUser(userData)
+            .then(response => {
+                if (response.data.resultCode === 0){
+                    console.log(response.data)
+                }
+            })
     }
 }
 

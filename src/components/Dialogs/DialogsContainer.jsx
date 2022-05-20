@@ -18,8 +18,8 @@ return {
         let action = updateNewMessageTextActionCreator (text);
         dispatch(action); 
     },
-    addMessage: () => {
-        dispatch(addMessageActionCreator());
+    addMessage: (message) => {
+        dispatch(addMessageActionCreator(message));
     },
 }
 }
