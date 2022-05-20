@@ -1,4 +1,4 @@
-import {addMessageActionCreator, updateNewMessageTextActionCreator} from '../../redux/dialogReducer'
+import {addMessageActionCreator} from '../../redux/dialogReducer'
 import Dialogs from "./Dialogs";
 import {connect} from 'react-redux';
 import {withAuthRedirect} from "../../hoc/withAuthRedirect"
@@ -14,12 +14,8 @@ return{
 let mapDispatchToProps = (dispatch) => { //Передаёт колбэки
 
 return {
-    updateNewMessageText: (text) => {
-        let action = updateNewMessageTextActionCreator (text);
-        dispatch(action); 
-    },
     addMessage: (message) => {
-        dispatch(addMessageActionCreator(message));
+        dispatch( addMessageActionCreator(message) );
     },
 }
 }
