@@ -8,7 +8,7 @@ import {
     getStatusThunkCreator,
     updateStatusThunkCreator
 } from "../../redux/profileReducer";
-import {getCurrentUserThunkCreator} from '../../redux/authReducer'
+//import {getCurrentUserThunkCreator} from '../../redux/authReducer'
 import { compose } from 'redux';
 
 import { //В React6 вместо import withRouter нужно импортировать вот так, чтобы достать id текущего пользователя и прочее.
@@ -19,8 +19,7 @@ import { //В React6 вместо import withRouter нужно импортир�
 
 function withRouter(Component) {
     function ComponentWithRouterProp(props) {
-        // let location = useLocation();
-        // let navigate = useNavigate();
+
         let params = useParams();
         
         return (
@@ -36,8 +35,7 @@ function withRouter(Component) {
 class ProfileContainer extends React.Component {
 
     componentDidMount(){
-        //this.props.toggleIsFetchig(true); //отмечаем, что передаются данные чтобы отрисовать прелоадер
-        
+        //this.props.toggleIsFetchig(true); //отмечаем, что передаются данные чтобы отрисовать прелоадер        
         
         let userId = this.props.router.params.userId; //Определяем id пользователя на который щелкнули на странице пользователей
         
@@ -46,12 +44,6 @@ class ProfileContainer extends React.Component {
                 console.log (userId)
         }
         this.props.getCurrentUserDataThunkCreator(userId)  
-        // profileAPI.getCurrentUserData(userId)    
-        // // axios.get(`https://social-network.samuraijs.com/api/1.0/profile/`+ userId)
-        //      .then(response => {                
-        //      this.props.setUserProfile(response.data);                
-        //      }
-        // ); 
         this.props.getStatusThunkCreator(userId)
         
     }    

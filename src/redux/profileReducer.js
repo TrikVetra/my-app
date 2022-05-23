@@ -1,7 +1,6 @@
 import { profileAPI } from "../api/api"
 
 const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_USER_STATUS'
 
@@ -23,15 +22,11 @@ const profileReducer = (state = initialState, action) => {
         case ADD_POST: {    
             let newPost = {     //готовим объект, который собираемся пушить
                 id: 5, 
-                message: state.newPostText
+                message: action.message
             }   
             return {...state,       //возвращаем копию состояния
                             postData: [...state.postData, newPost],
                             newPostText: ''};           
-        }
-        case UPDATE_NEW_POST_TEXT:{            
-            return {...state,  //возвращаем копию состояния
-                            newPostText: action.newText}
         }
         case SET_USER_PROFILE:{
             return {...state,
@@ -50,15 +45,11 @@ const profileReducer = (state = initialState, action) => {
 
 
 //ActionCreators
-export const addPostActionCreator = () =>  
-    ({type: ADD_POST,}) //return type
-    
-
-export const updateNewPostTextActionCreator = (text) => //return type, newText
+export const addPostActionCreator = (message) =>  
     ({
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text    
-    })
+        type: ADD_POST,
+        message
+    }) //return type
 
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
 
@@ -77,8 +68,7 @@ export const getCurrentUserDataThunkCreator = (userId) => {
     }
 }
 
-export const getStatusThunkCreator = (userId) => {
-    
+export const getStatusThunkCreator = (userId) => {    
     return (dispatch) => {
         profileAPI.getStatus(userId)    
              .then(response => {                

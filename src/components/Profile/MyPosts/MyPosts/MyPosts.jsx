@@ -39,8 +39,8 @@ let postElement = props.postData.map (
     post => <Post message = {post.message} key = {post.id}/>
 )
 
-const onSubmit = (formData) => {
-    console.log(formData)
+const onSubmit = (values) => {
+    props.addPost(values.message);
 }
 
     return (
