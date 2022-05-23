@@ -11,12 +11,10 @@ let mapStateToProps = (state) => { //Передаёт данные
 }
 
 let mapDispatchToProps = (dispatch) => { //Передаёт колбэки
-
     return {
         addPost: (message) => {
             dispatch(addPostActionCreator(message));
         },
-
     }
 }
 

@@ -1,6 +1,6 @@
 import classes from './Autor.module.css';
 import userPhoto from '../../../../assets/img/monkey.png';
-import Preloader from '../../../Common/Preloader'
+import Preloader from '../../../Common/Preloader/Preloader'
 import ProfileStatus from '../ProfileStatus/ProfileStatus';
 
 const Autor = (props) => {

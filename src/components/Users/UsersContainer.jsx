@@ -11,7 +11,7 @@ import {
 
 import React from 'react';
 import Users from './Users';
-import Preloader from '../Common/Preloader';
+import Preloader from '../Common/Preloader/Preloader';
 import {usersAPI} from "../../api/api";
 
 

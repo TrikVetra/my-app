@@ -1,4 +1,4 @@
-import PreloaderImg from '../../assets/img/preloader.gif'
+import PreloaderImg from '../../../assets/img/preloader.gif'
 import style from './Preloader.module.css'
 
 
