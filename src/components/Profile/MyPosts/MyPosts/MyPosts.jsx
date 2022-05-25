@@ -1,9 +1,9 @@
 import classes from './MyPosts.module.css';
 import React from 'react';
 import Post from '../Post/Post';
-import {Field, reduxForm} from "redux-form" 
-import {required, maxLengthCreator} from '../../../../utils/validators/validators'
-import {Textarea} from '../../../Common/FormsControls/FormsControls';
+import { Field, reduxForm } from "redux-form"
+import { required, maxLengthCreator } from '../../../../utils/validators/validators'
+import { Textarea } from '../../../Common/FormsControls/FormsControls';
 
 const maxLength10 = maxLengthCreator(10);
 
@@ -11,9 +11,11 @@ const profileMessageForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder={'сообщение'} name={'message'} component={Textarea} validate={[required, maxLength10]}/> 
-                {/* <Field name="myField" component={Textarea}/> */}
-           </div>
+                <Field placeholder={'сообщение'}
+                    name={'message'}
+                    component={Textarea}
+                    validate={[required, maxLength10]} />
+            </div>
             <div>
                 <button type='submit'> Создать </button>
             </div>
@@ -27,39 +29,21 @@ const MessageReduxForm = reduxForm({ //контейнерная компонен
 
 const NewPost = (props) => {
 
-// let newPostElement = React.createRef();
+    let postElement = props.postData.map(
+        post => <Post message={post.message} key={post.id} />
+    )
 
-// let onAddPost = () => {       
-          
-//     props.addPost(); 
-// }
-
-// let onPostChange = () => {
-//     let text = newPostElement.current.value;
-//     props.updateNewPostText(text);
-// }
-
-
-let postElement = props.postData.map (
-    post => <Post message = {post.message} key = {post.id}/>
-)
-
-const onSubmit = (values) => {
-    props.addPost(values.message);
-}
+    const onSubmit = (values) => {
+        props.addPost(values.message);
+    }
 
     return (
         <div className={classes.newPost}>
-            {/* <textarea onChange={onPostChange} ref={newPostElement} value={props.newPostText}/>
             <div>
-                <button onClick={onAddPost}> Создать </button>
-            </div> */}
-            <div>
-                <MessageReduxForm onSubmit={onSubmit}/>
+                <MessageReduxForm onSubmit={onSubmit} />
             </div>
-            
 
-            <div>{postElement}</div>    
+            <div>{postElement}</div>
         </div>
 
     );
@@ -67,4 +51,3 @@ const onSubmit = (values) => {
 
 export default NewPost;
 
- 

@@ -1,17 +1,31 @@
 import {Field, reduxForm} from "redux-form" //reduxForm на сегодняшний день устарели. Вместо них надо использовать finalForm или Formik
-
+import { required } from "../../utils/validators/validators"
+import { Input } from "../Common/FormsControls/FormsControls"
 
 const LoginForm = (props) => {
     return (
             <form onSubmit={props.handleSubmit}>
                 <div>
-                    <Field placeholder={'email'} name={'login'} component={'input'} type={'text'}/>
+                    <Field placeholder={'email'} 
+                        name={'login'} 
+                        component={Input} 
+                        type={'text'}
+                        validate={[required]}
+                    />
                 </div>
                 <div>
-                    <Field placeholder={'password'} name={'password'} component={'input'} type={'text'}/>
+                    <Field placeholder={'password'} 
+                        name={'password'} 
+                        component={Input} 
+                        type={'text'} 
+                        validate={[required]}
+                    />
                 </div>
                 <div>
-                    <Field component={'input'} type={'checkbox'} name={'rememberMe'}/> remember me
+                    <Field component={Input} 
+                        type={'checkbox'} 
+                        name={'rememberMe'}
+                    /> remember me
                 </div>
                 <div>
                     <button type='submit'> Login </button>
