@@ -1,13 +1,13 @@
-import { authAPI } from "../api/api";
+import { authAPI, loginAPI } from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA';
 
 
 let initialState = {  
     isFetching: false, 
-    id: 23392,
-    email: null,
-    login: null,
+    id: 0,
+    email: '',
+    login: '',
     isAuth: false,
     rememberMe: false,
 }
@@ -26,8 +26,8 @@ const authReducer = (state = initialState, action) => {
 }
 
 //ActionCreators
-export const setUserData = (id, email, login) =>  
-    ({type: SET_USER_DATA, userData :{id, email, login}})
+export const setUserData = (id, email, login, isAuth) =>  
+    ({type: SET_USER_DATA, userData :{id, email, login, isAuth}})
 
 //ThunkCreators
 export const getCurrentUserThunkCreator = () => {
@@ -36,19 +36,30 @@ export const getCurrentUserThunkCreator = () => {
             .then(response => {
                 if (response.data.resultCode === 0){
                     let {id, login, email} = response.data.data
-                    dispatch(setUserData(id,email,login))                    
+                    dispatch(setUserData(id, email, login, true)) //isAuth = true             
                 }            
             }
         );
     }
 }
 
-export const userLoginThunkCreator = (userData) => { 
+export const loginThunkCreator = (email, password, rememberMe) => { 
     return (dispatch) => {
-        authAPI.loginUser(userData)
+        loginAPI.login(email, password, rememberMe)
             .then(response => {
                 if (response.data.resultCode === 0){
-                    console.log(response.data)
+                    dispatch(getCurrentUserThunkCreator())
+                }
+            })
+    }
+}
+
+export const logoutThunkCreator = () => {
+    return (dispatch) => {
+        loginAPI.logout()
+            .then(response => {
+                if (response.data.resultCode === 0){
+                    dispatch(setUserData(0, '', '', false)) //id = 0, email = '', login = '', isAuth = false 
                 }
             })
     }

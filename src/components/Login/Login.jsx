@@ -1,13 +1,15 @@
 import {Field, reduxForm} from "redux-form" //reduxForm на сегодняшний день устарели. Вместо них надо использовать finalForm или Formik
 import { required } from "../../utils/validators/validators"
 import { Input } from "../Common/FormsControls/FormsControls"
+import { connect } from "react-redux"
+import { loginThunkCreator, logoutThunkCreator } from "../../redux/authReducer"
 
 const LoginForm = (props) => {
     return (
             <form onSubmit={props.handleSubmit}>
                 <div>
                     <Field placeholder={'email'} 
-                        name={'login'} 
+                        name={'email'} 
                         component={Input} 
                         type={'text'}
                         validate={[required]}
@@ -17,7 +19,7 @@ const LoginForm = (props) => {
                     <Field placeholder={'password'} 
                         name={'password'} 
                         component={Input} 
-                        type={'text'} 
+                        type={'password'} 
                         validate={[required]}
                     />
                 </div>
@@ -41,6 +43,7 @@ const LoginReduxForm = reduxForm({ //контейнерная компонент
 const Login = (props) => {
     const onSubmit = (formData) => {
         console.log(formData)
+        props.loginThunkCreator(formData.email, formData.password, formData.rememberMe)
     }
 
     return (
@@ -51,7 +54,7 @@ const Login = (props) => {
     )
 }
 
-export default Login
+export default connect(null, {loginThunkCreator, logoutThunkCreator}) (Login)
 
 
 
