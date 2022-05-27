@@ -18,7 +18,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,      // возвращаем копию состояния                
                 ...action.userData,
-                isAuth: true,
+                
             };        
         default:
             return state;

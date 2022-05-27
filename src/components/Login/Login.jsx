@@ -3,6 +3,7 @@ import { required } from "../../utils/validators/validators"
 import { Input } from "../Common/FormsControls/FormsControls"
 import { connect } from "react-redux"
 import { loginThunkCreator, logoutThunkCreator } from "../../redux/authReducer"
+import { Navigate } from "react-router-dom"
 
 const LoginForm = (props) => {
     return (
@@ -46,6 +47,7 @@ const Login = (props) => {
         props.loginThunkCreator(formData.email, formData.password, formData.rememberMe)
     }
 
+    if (props.isAuth) return <Navigate to="/profile" />
     return (
         <div>
             <h2>Login</h2>
@@ -54,7 +56,11 @@ const Login = (props) => {
     )
 }
 
-export default connect(null, {loginThunkCreator, logoutThunkCreator}) (Login)
+const mapStateToProps = (state) => ({
+    isAuth: state.auth.isAuth
+})
+
+export default connect(mapStateToProps, {loginThunkCreator, logoutThunkCreator}) (Login)
 
 
 

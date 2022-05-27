@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import {
     setUserData,
     getCurrentUserThunkCreator,
+    logoutThunkCreator
 } from '../../redux/authReducer'
 import { authAPI } from '../../api/api';
 
@@ -37,4 +38,5 @@ export default connect(mapStateToProps,
     {
         setUserData,
         getCurrentUserThunkCreator,
+        logoutThunkCreator
     }) (HeaderContainer)
