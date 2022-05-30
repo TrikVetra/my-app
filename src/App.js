@@ -7,30 +7,47 @@ import Navbar from './components/Navbar/Navbar';
 import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import LoginPage from './components/Login/Login'
+import React from 'react';
+import { connect } from 'react-redux';
+import {initializeApp} from './redux/appReducer'
+import Preloader from './components/Common/Preloader/Preloader';
 
 
-const App = (props) => {  
-  return (    
-    <BrowserRouter>
-      <div className="app_wrapper">
-        <HeaderContainer />
-        <Navbar />
-        <div className="app_wrapper_content">
-          <Routes>
-            {/* Если в конце пути /* значит вместо * может быть что угодно. Если * нет, то путь должен быть точным. */}
-            {/* После : написано имя параметра по которому можно обратиться с помощью withRoute (useParams) к части адреса */}
-            {/* ? означает, что параметр опциональный (может быть, а может нет) */}
-            <Route path='/profile/' element={<ProfileContainer/>}/> 
-            <Route path='/profile/:userId' element={<ProfileContainer/>}/> 
-            <Route path='/dialogs/*' element={<DialogsContainer/>}/> 
-            <Route path='/users' element={<UsersContainer/>}/>    
-            <Route path='/login' element={<LoginPage/>}/>
-          </Routes>
+class App extends React.Component {
+  componentDidMount () {
+    this.props.initializeApp()          
+  }
+
+  render() {
+    if (!this.props.initialized) return <Preloader />
+    else return (
+      <BrowserRouter>
+        <div className="app_wrapper">
+          <HeaderContainer />
+          <Navbar />
+          <div className="app_wrapper_content">
+            <Routes>
+              {/* Если в конце пути /* значит вместо * может быть что угодно. Если * нет, то путь должен быть точным. */}
+              {/* После : написано имя параметра по которому можно обратиться с помощью withRoute (useParams) к части адреса */}
+              {/* ? означает, что параметр опциональный (может быть, а может нет) */}
+              <Route path='/profile/' element={<ProfileContainer />} />
+              <Route path='/profile/:userId' element={<ProfileContainer />} />
+              <Route path='/dialogs/*' element={<DialogsContainer />} />
+              <Route path='/users' element={<UsersContainer />} />
+              <Route path='/login' element={<LoginPage />} />
+            </Routes>
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
-  );
+      </BrowserRouter>
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  initialized: state.app.initialized
+})
+
+export default connect(mapStateToProps, {initializeApp}) (App)
+
+
 

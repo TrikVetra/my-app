@@ -36,8 +36,9 @@ class ProfileContainer extends React.Component {
     componentDidMount(){
         let userId = this.props.router.params.userId; //Определяем id пользователя на который щелкнули на странице пользователей
         
-        if (userId === 0){ //Если перешли с главной, подставляем id текущего авторизованного пользователя.                
+        if (!userId){ //Если перешли с главной, подставляем id текущего авторизованного пользователя.                
             userId=this.props.auth.id;
+            //if (!userId) this.props.history.push("/profile")
         }
         this.props.getCurrentUserDataThunkCreator(userId)  
         this.props.getStatusThunkCreator(userId)        

@@ -5,6 +5,7 @@ import usersReducer from "./usersReducer"
 import authReducer from "./authReducer"
 import thunkMiddleware from  "redux-thunk"
 import { reducer as formReducer } from 'redux-form'
+import appReducer from "./appReducer"
 
 let redusers = combineReducers({
     profilePage: profileReducer,
@@ -12,6 +13,7 @@ let redusers = combineReducers({
     usersPage: usersReducer,
     auth: authReducer,
     form: formReducer,
+    app: appReducer
 });
 
 let store = createStore(redusers, applyMiddleware(thunkMiddleware)) //applyMiddleware нужно чтобы диспатчить функции-Thunkи

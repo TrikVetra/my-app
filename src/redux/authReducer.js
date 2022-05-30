@@ -5,7 +5,7 @@ const SET_USER_DATA = 'SET_USER_DATA';
 
 let initialState = {  
     isFetching: false, 
-    id: 0,
+    id: null,
     email: '',
     login: '',
     isAuth: false,
@@ -30,17 +30,15 @@ export const setUserData = (id, email, login, isAuth) =>
     ({type: SET_USER_DATA, userData :{id, email, login, isAuth}})
 
 //ThunkCreators
-export const getCurrentUserThunkCreator = () => {
-    return (dispatch) => {
-        authAPI.getCurrentUser()
-            .then(response => {
-                if (response.data.resultCode === 0){
-                    let {id, login, email} = response.data.data
-                    dispatch(setUserData(id, email, login, true)) //isAuth = true             
-                }            
-            }
-        );
-    }
+export const getCurrentUserThunkCreator = () => (dispatch) => {
+    return authAPI.getCurrentUser() //Если написать тут return, thunk будет возвращать promise
+        .then(response => {
+            if (response.data.resultCode === 0){
+                let {id, login, email} = response.data.data
+                dispatch(setUserData(id, email, login, true)) //isAuth = true             
+            }            
+        }
+    );    
 }
 
 export const loginThunkCreator = (email, password, rememberMe) => { 
