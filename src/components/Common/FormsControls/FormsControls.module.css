@@ -6,3 +6,10 @@
 .formsControl.error span {
     color: coral;
 }
+
+.formSummaryError {
+    border: solid coral 2px;
+    padding: 5px;
+    color: coral;
+    width: fit-content;
+}

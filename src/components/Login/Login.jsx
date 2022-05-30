@@ -4,6 +4,7 @@ import { Input } from "../Common/FormsControls/FormsControls"
 import { connect } from "react-redux"
 import { loginThunkCreator, logoutThunkCreator } from "../../redux/authReducer"
 import { Navigate } from "react-router-dom"
+import style from "../Common/FormsControls/FormsControls.module.css"
 
 const LoginForm = (props) => {
     return (
@@ -30,6 +31,9 @@ const LoginForm = (props) => {
                         name={'rememberMe'}
                     /> remember me
                 </div>
+                {props.error && <div className={style.formSummaryError}>
+                    {props.error}
+                </div>}
                 <div>
                     <button type='submit'> Login </button>
                 </div>
