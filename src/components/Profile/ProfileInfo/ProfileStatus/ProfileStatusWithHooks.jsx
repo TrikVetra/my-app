@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 const ProfileStatusWithHooks = (props) => {
 
@@ -8,6 +8,11 @@ const ProfileStatusWithHooks = (props) => {
     //С помощью деструктурированного присваивания это пишется так:
     let [editMode, setEditMode] = useState(false)
     let [status, setStatus] = useState(props.status)
+
+    //Используется вместо componentDidUpdate/componentDidMount классовых компонент
+    useEffect( () => {
+        setStatus(props.status)
+    }, [props.status] ); //вызывается каждый раз, когда происходят какие-то изменения водном из элементов этого массива. Если массив не указать, то каждый раз когда перерисовывается jsx на странице. Если передать пустой массив, выполнится 1 раз при монтировании компоненты.
 
     const activateEditMode = () => {
         setEditMode(true);
