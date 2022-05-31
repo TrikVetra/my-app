@@ -1,14 +1,14 @@
 import classes from './Autor.module.css';
 import userPhoto from '../../../../assets/img/monkey.png';
 import Preloader from '../../../Common/Preloader/Preloader'
-import ProfileStatus from '../ProfileStatus/ProfileStatus';
+import ProfileStatusWithHooks from '../ProfileStatus/ProfileStatusWithHooks';
 
 const Autor = (props) => {
     if (!props.profile) { //Если данных ещё нет, грузим прелоадер.
         return (<Preloader/>)
     } else  return (  
         <>
-        <ProfileStatus status={props.status} updateStatus={props.updateStatus}/>
+        <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus}/>
         <div className={classes.autor}>
             
             <img alt='hear' src={props.profile.photos.large ? props.profile.photos.large: userPhoto}></img>
