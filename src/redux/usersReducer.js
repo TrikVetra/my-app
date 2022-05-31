@@ -80,7 +80,7 @@ const usersReducer = (state = initialState, action) => {
                 ...state, 
                 followingInProgress: action.isFetching 
                 ? [...state.followingInProgress, action.userID] // дописываем id в конец массива
-                : state.followingInProgress.filter(id => id != action.userID) //метод filter()создаёт новый массив со всеми элементами, прошедшими проверку, задаваемую в передаваемой функции
+                : state.followingInProgress.filter(id => id !== action.userID) //метод filter()создаёт новый массив со всеми элементами, прошедшими проверку, задаваемую в передаваемой функции
             } 
 
         default:
@@ -100,7 +100,7 @@ export const toggleIsFetchig = (isFetching) => ({ type: FETCHING, isFetching})
 export const toggleFollowing = (isFetching, userID) => ({type: FOLLOWING_IN_PROGRESS, isFetching, userID})
 
 //ThunkCreators
-export const getUsersThunkCreator = (currentPage, pageSize) => {
+export const requestUsersThunkCreator = (currentPage, pageSize) => {
     return (dispatch) => {
         dispatch(toggleIsFetchig(true)) //отмечаем, что передаются данные чтобы отрисовать прелоадер
         usersAPI.getUsers(currentPage, pageSize).then(data => {
@@ -114,7 +114,7 @@ export const getUsersThunkCreator = (currentPage, pageSize) => {
 export const followThunkCreator = (userId) => {
     return (dispatch) => {
         dispatch(toggleFollowing(true, userId))
-        usersAPI.followUser(userId).then (data => {
+        usersAPI.followUser(userId).then(data => {
             if (data.resultCode === 0) { //resultCode == 0 означает что операция выполнена успешно.
                 dispatch(follow(userId))
             }

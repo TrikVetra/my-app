@@ -4,7 +4,7 @@ import {
     unfollow,
     setCurrentPage,
     toggleFollowing,
-    getUsersThunkCreator,
+    requestUsersThunkCreator,
     unfollowThunkCreator,
     followThunkCreator,
 } from "../../redux/usersReducer";
@@ -12,24 +12,25 @@ import {
 import React from 'react';
 import Users from './Users';
 import Preloader from '../Common/Preloader/Preloader';
-import {usersAPI} from "../../api/api";
+import { 
+    getCurrentPage, 
+    getFollowingInProgress, 
+    getIsFetching, 
+    getPageSize, 
+    getTotalUsersCount, 
+    getUsers 
+} from "../../redux/usersSelectors";
 
 
 class UsersContainer extends React.Component {
     
         componentDidMount () {   
-            this.props.getUsersThunkCreator(this.props.currentPage,this.props.pageSize)
+            this.props.requestUsersThunkCreator(this.props.currentPage,this.props.pageSize)
         }
     
         onPageChanged = (pageNumber) => {
-            this.props.getUsersThunkCreator(pageNumber,this.props.pageSize)
+            this.props.requestUsersThunkCreator(pageNumber,this.props.pageSize)
             this.props.setCurrentPage(pageNumber);
-            // this.props.toggleIsFetchig(true);
-            // usersAPI.getUsers(pageNumber,this.props.pageSize).then(data => {
-            //     this.props.setUsers(data.items);
-            //     this.props.toggleIsFetchig(false);
-            //     }
-            // );
         }   
     
             render()
@@ -54,12 +55,12 @@ class UsersContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        usersData: state.usersPage.usersData,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress,
+        usersData: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state),
     }
 }
 
@@ -97,7 +98,7 @@ export default connect (mapStateToProps,
         unfollow,
         setCurrentPage,
         toggleFollowing,
-        getUsersThunkCreator,
+        requestUsersThunkCreator,
         followThunkCreator,
         unfollowThunkCreator,
     }
