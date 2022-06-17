@@ -1,4 +1,4 @@
-import {usersAPI} from "../api/api"
+import { usersAPI } from "../api/api"
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -51,7 +51,6 @@ const usersReducer = (state = initialState, action) => {
                     return user
                 })
             }
-
         case UNFOLLOW:
             return {
                 ...state,
@@ -64,80 +63,71 @@ const usersReducer = (state = initialState, action) => {
             }
 
         case SET_USERS:
-            return { ...state, usersData: [...action.usersData]} //скопировать массив со старыми пользователями, добавить новых пользователей из action.usersData            
+            return { ...state, usersData: [...action.usersData] } //скопировать массив со старыми пользователями, добавить новых пользователей из action.usersData            
 
         case SET_CURRENT_PAGE:
-            return { ...state, currentPage: action.pageNumber} //скопировать массив со старыми пользователями, добавить новых пользователей из action.usersData            
+            return { ...state, currentPage: action.pageNumber } //скопировать массив со старыми пользователями, добавить новых пользователей из action.usersData            
 
         case SET_TOTAL_COUNT:
-            return { ...state, totalUsersCount: action.totalCount} 
+            return { ...state, totalUsersCount: action.totalCount }
 
         case FETCHING:
-            return { ...state, isFetching: action.isFetching} //У Димана isFetching
+            return { ...state, isFetching: action.isFetching } //У Димана isFetching
 
         case FOLLOWING_IN_PROGRESS:
-            return { 
-                ...state, 
-                followingInProgress: action.isFetching 
-                ? [...state.followingInProgress, action.userID] // дописываем id в конец массива
-                : state.followingInProgress.filter(id => id !== action.userID) //метод filter()создаёт новый массив со всеми элементами, прошедшими проверку, задаваемую в передаваемой функции
-            } 
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userID] // дописываем id в конец массива
+                    : state.followingInProgress.filter(id => id !== action.userID) //метод filter()создаёт новый массив со всеми элементами, прошедшими проверку, задаваемую в передаваемой функции
+            }
 
         default:
             return state;
-        
+
     }
 
 }
 
 //ActionCreators
-export const setCurrentPage = (pageNumber) => ({type: SET_CURRENT_PAGE, pageNumber})
-export const setUsersCount = (totalCount) =>({type: SET_TOTAL_COUNT, totalCount})
-export const follow = (userID) => ({ type: FOLLOW, userID }) 
-export const unfollow = (userID) => ({ type: UNFOLLOW, userID})
-export const setUsers = (usersData) => ({ type: SET_USERS, usersData})
-export const toggleIsFetchig = (isFetching) => ({ type: FETCHING, isFetching})
-export const toggleFollowing = (isFetching, userID) => ({type: FOLLOWING_IN_PROGRESS, isFetching, userID})
+export const setCurrentPage = (pageNumber) => ({ type: SET_CURRENT_PAGE, pageNumber })
+export const setUsersCount = (totalCount) => ({ type: SET_TOTAL_COUNT, totalCount })
+export const follow = (userID) => ({ type: FOLLOW, userID })
+export const unfollow = (userID) => ({ type: UNFOLLOW, userID })
+export const setUsers = (usersData) => ({ type: SET_USERS, usersData })
+export const toggleIsFetchig = (isFetching) => ({ type: FETCHING, isFetching })
+export const toggleFollowing = (isFetching, userID) => ({ type: FOLLOWING_IN_PROGRESS, isFetching, userID })
 
 //ThunkCreators
 export const requestUsersThunkCreator = (currentPage, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleIsFetchig(true)) //отмечаем, что передаются данные чтобы отрисовать прелоадер
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
-            dispatch(setUsers(data.items))
-            dispatch(setUsersCount(data.totalCount))
-            dispatch(toggleIsFetchig(false))
-        }
-        );
+        let data = await usersAPI.getUsers(currentPage, pageSize)
+        dispatch(setUsers(data.items))
+        dispatch(setUsersCount(data.totalCount))
+        dispatch(toggleIsFetchig(false))
     }
 }
-export const followThunkCreator = (userId) => {
-    return (dispatch) => {
+
+const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) => {    
         dispatch(toggleFollowing(true, userId))
-        usersAPI.followUser(userId).then(data => {
-            if (data.resultCode === 0) { //resultCode == 0 означает что операция выполнена успешно.
-                dispatch(follow(userId))
-            }
-            dispatch(toggleFollowing(false, userId))
+        let data = await apiMethod(userId)
+        if (data.resultCode === 0) { //resultCode == 0 означает что операция выполнена успешно.
+            dispatch(actionCreator(userId))
         }
-        )
+        dispatch(toggleFollowing(false, userId))    
+}
+
+export const followThunkCreator = (userId) => {
+    return async (dispatch) => {
+        followUnfollowFlow(dispatch, userId, usersAPI.followUser.bind(usersAPI), follow)        
     }
 }
 
 export const unfollowThunkCreator = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowing(true, userId))
-        usersAPI.unfollowUser(userId).then (data => {
-            if (data.resultCode === 0) { //resultCode == 0 означает что операция выполнена успешно.
-                dispatch(unfollow(userId))
-            }
-            dispatch(toggleFollowing(false, userId))
-        }
-        )
+    return async (dispatch) => {
+        followUnfollowFlow(dispatch, userId, usersAPI.unfollowUser.bind(usersAPI), unfollow)        
     }
 }
-
-
-
 
 export default usersReducer;
