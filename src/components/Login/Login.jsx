@@ -1,43 +1,24 @@
-import {Field, reduxForm} from "redux-form" //reduxForm на сегодняшний день устарели. Вместо них надо использовать finalForm или Formik
+import { reduxForm } from "redux-form" //reduxForm на сегодняшний день устарели. Вместо них надо использовать finalForm или Formik
 import { required } from "../../utils/validators/validators"
-import { Input } from "../Common/FormsControls/FormsControls"
+import { Input, CreateField } from "../Common/FormsControls/FormsControls"
 import { connect } from "react-redux"
 import { loginThunkCreator, logoutThunkCreator } from "../../redux/authReducer"
 import { Navigate } from "react-router-dom"
 import style from "../Common/FormsControls/FormsControls.module.css"
 
-const LoginForm = (props) => {
+const LoginForm = ({ handleSubmit, error }) => { //Если указываем параметры в фигурных скобках - это деструктуризация параметров. Получаем пропсы полностью и вытаскиваем только то, что интересно.
     return (
-            <form onSubmit={props.handleSubmit}>
-                <div>
-                    <Field placeholder={'email'} 
-                        name={'email'} 
-                        component={Input} 
-                        type={'text'}
-                        validate={[required]}
-                    />
-                </div>
-                <div>
-                    <Field placeholder={'password'} 
-                        name={'password'} 
-                        component={Input} 
-                        type={'password'} 
-                        validate={[required]}
-                    />
-                </div>
-                <div>
-                    <Field component={Input} 
-                        type={'checkbox'} 
-                        name={'rememberMe'}
-                    /> remember me
-                </div>
-                {props.error && <div className={style.formSummaryError}>
-                    {props.error}
-                </div>}
-                <div>
-                    <button type='submit'> Login </button>
-                </div>
-            </form>
+        <form onSubmit={handleSubmit}>
+            {CreateField('email', 'email', Input, 'text', [required])}
+            {CreateField('password', 'password', Input, 'password', [required])}
+            {CreateField('', 'rememberMe', Input, 'checkbox', [], 'Remember Me')}
+            {error && <div className={style.formSummaryError}>
+                {error}
+            </div>}
+            <div>
+                <button type='submit'> Login </button>
+            </div>
+        </form>
     )
 }
 
@@ -55,7 +36,7 @@ const Login = (props) => {
     return (
         <div>
             <h2>Login</h2>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginReduxForm onSubmit={onSubmit} />
         </div>
     )
 }
@@ -64,7 +45,7 @@ const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth
 })
 
-export default connect(mapStateToProps, {loginThunkCreator, logoutThunkCreator}) (Login)
+export default connect(mapStateToProps, { loginThunkCreator, logoutThunkCreator })(Login)
 
 
 

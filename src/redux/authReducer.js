@@ -70,7 +70,7 @@ export const loginThunkCreator = (email, password, rememberMe) => {
 
 export const logoutThunkCreator = () => {
     return async (dispatch) => {
-        let response = loginAPI.logout()
+        let response = await loginAPI.logout()
         if (response.data.resultCode === 0) {
             dispatch(setUserData(0, '', '', false)) //id = 0, email = '', login = '', isAuth = false 
         }
