@@ -14,7 +14,7 @@ let initialState = {
     isFetching: false,
     followingInProgress: [],
     pageSize: 30,
-    totalUsersCount: 0,
+    totalItemsCount: 0,
     currentPage: 1,
     usersData: [
         // Данные приходят с сервера, поэтому тут не нужны //
@@ -72,7 +72,7 @@ const usersReducer = (state = initialState, action) => {
             return { ...state, currentPage: action.pageNumber } //скопировать массив со старыми пользователями, добавить новых пользователей из action.usersData            
 
         case SET_TOTAL_COUNT:
-            return { ...state, totalUsersCount: action.totalCount }
+            return { ...state, totalItemsCount: action.totalCount }
 
         case FETCHING:
             return { ...state, isFetching: action.isFetching } //У Димана isFetching
