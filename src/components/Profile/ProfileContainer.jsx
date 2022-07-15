@@ -33,7 +33,7 @@ function withRouter(Component) {
 
 class ProfileContainer extends React.Component {
 
-    componentDidMount(){
+    refreshProfile(){
         let userId = this.props.router.params.userId; //Определяем id пользователя на который щелкнули на странице пользователей
         
         if (!userId){ //Если перешли с главной, подставляем id текущего авторизованного пользователя.                
@@ -41,13 +41,29 @@ class ProfileContainer extends React.Component {
             //if (!userId) this.props.history.push("/profile")
         }
         this.props.getCurrentUserDataThunkCreator(userId)  
-        this.props.getStatusThunkCreator(userId)        
+        this.props.getStatusThunkCreator(userId)     
+    }
+
+    componentDidMount(){
+        this.refreshProfile()
     }    
+
+    componentDidUpdate(prevProps){ //prevProps (предыдущие пропсы) есть у этой компоненты жизненного цикла по умолчанию
+        debugger
+        if (this.props.profile.userId != prevProps.profile.userId){ //Обновляем только если текущий id пользователя отличается от предыдущего.
+           this.refreshProfile()
+        }        
+    }
 
     render() {
         
         return (
-            <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatusThunkCreator}/>
+            <Profile {...this.props} 
+                     profile={this.props.profile} 
+                     status={this.props.status} 
+                     updateStatus={this.props.updateStatusThunkCreator}
+                     isOwner={!!this.props.profile.userId} //Двойное отрицание присвоит true вместо значения
+            />
         )
     }
 }

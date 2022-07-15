@@ -1,10 +1,14 @@
+.profile_wrapper{
+    color: lightgray;
+}
+
 .autor{
 
     display: grid;
 
   grid-template-areas: 
      "img description";
-  grid-template-columns: 100px 100%;
+  grid-template-columns: auto 100%;
   grid-gap: 10px;
 
   background-color: grey;
@@ -14,7 +18,7 @@
 .autor img{
     grid-area: img;
     background-color: lightgrey;
-    height: 100px;
+    height: 200px;
 }
 
 .autor_description{
