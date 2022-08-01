@@ -10,8 +10,8 @@ const Profile = (props) => {
             <ProfileInfo profile={props.profile}
                          status={props.status}
                          updateStatus={props.updateStatus}   
-                         auth={props.auth}
-                         isOwner={props.isOwner}                         
+                         auth={props.auth}    
+                         savePhoto={props.savePhoto}                  
             />
             <MyPostsContainer />   
         </div>

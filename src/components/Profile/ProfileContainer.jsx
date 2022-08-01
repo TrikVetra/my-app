@@ -6,7 +6,8 @@ import {
     setUserProfile,
     getCurrentUserDataThunkCreator,
     getStatusThunkCreator,
-    updateStatusThunkCreator
+    updateStatusThunkCreator,
+    savePhotoThunkCreator
 } from "../../redux/profileReducer";
 import { compose } from 'redux';
 
@@ -33,6 +34,8 @@ function withRouter(Component) {
 
 class ProfileContainer extends React.Component {
 
+    
+
     refreshProfile(){
         let userId = this.props.router.params.userId; //Определяем id пользователя на который щелкнули на странице пользователей
         
@@ -41,7 +44,7 @@ class ProfileContainer extends React.Component {
             //if (!userId) this.props.history.push("/profile")
         }
         this.props.getCurrentUserDataThunkCreator(userId)  
-        this.props.getStatusThunkCreator(userId)     
+        this.props.getStatusThunkCreator(userId)  
     }
 
     componentDidMount(){
@@ -49,20 +52,18 @@ class ProfileContainer extends React.Component {
     }    
 
     componentDidUpdate(prevProps){ //prevProps (предыдущие пропсы) есть у этой компоненты жизненного цикла по умолчанию
-        debugger
-        if (this.props.profile.userId != prevProps.profile.userId){ //Обновляем только если текущий id пользователя отличается от предыдущего.
+        if (this.props.profile.userId !== prevProps.profile.userId){ //Обновляем только если текущий id пользователя отличается от предыдущего.
            this.refreshProfile()
         }        
     }
-
+    
     render() {
-        
         return (
             <Profile {...this.props} 
                      profile={this.props.profile} 
                      status={this.props.status} 
                      updateStatus={this.props.updateStatusThunkCreator}
-                     isOwner={!!this.props.profile.userId} //Двойное отрицание присвоит true вместо значения
+                     savePhoto={this.props.savePhotoThunkCreator}  
             />
         )
     }
@@ -84,6 +85,7 @@ compose (
             getCurrentUserDataThunkCreator,
             getStatusThunkCreator,
             updateStatusThunkCreator,
+            savePhotoThunkCreator
         }),
     withRouter,
     //withAuthRedirect,

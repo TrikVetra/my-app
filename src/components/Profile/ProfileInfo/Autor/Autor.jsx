@@ -10,10 +10,12 @@ const Autor = (props) => {
         <div className={classes.profile_wrapper}>
             <div className={classes.status}>
                 <ProfileStatusWithHooks status={props.status} updateStatus={props.updateStatus} />
+                {/* {props.isOwner && <input type={"file"}/> } */}
             </div>
             <div className={classes.autor}>
 
                 <img alt='hear' src={props.profile.photos.large || userPhoto}></img>
+                
 
                 <div className={classes.autor_description}>
                     <b>Имя:</b> {props.profile.fullName}<br></br>

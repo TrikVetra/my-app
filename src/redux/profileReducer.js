@@ -3,6 +3,7 @@ import { profileAPI } from "../api/api"
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_USER_STATUS'
+const SAVE_PHOTO = 'SAVE_PHOTO'
 
 let initialState = {
     postData: [
@@ -42,6 +43,15 @@ const profileReducer = (state = initialState, action) => {
                 status: action.status
             }
         }
+        case SAVE_PHOTO: {
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    photos: action.photos
+                }
+            }
+        }
 
         default:
             return state;
@@ -61,6 +71,7 @@ export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 
 export const setStatus = (status) => ({ type: SET_STATUS, status })
 
+export const savePhoto = (photos) => ({ type: SAVE_PHOTO, photos })
 
 //ThunkCreators
 export const getCurrentUserDataThunkCreator = (userId) => {
@@ -83,6 +94,15 @@ export const updateStatusThunkCreator = (status) => {
         let response = await profileAPI.updateStatus(status)
         if (response.data.resultCode === 0) {
             dispatch(setStatus(status))
+        }
+    }
+}
+
+export const savePhotoThunkCreator = (file) => {
+    return async (dispatch) => {
+        let response = await profileAPI.savePhoto(file)
+        if (response.data.resultCode === 0) {
+            dispatch(savePhoto(response.data.data.photos))
         }
     }
 }
