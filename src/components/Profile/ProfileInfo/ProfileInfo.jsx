@@ -26,9 +26,20 @@ const ProfileInfo = (props) => {
                 {props.profile.userId === props.auth.id ? <input type={"file"} onChange={photoSelected}/> : null }
 
                 <div className={classes.autor_description}>
-                    <b>Имя:</b> {props.profile.fullName}<br></br>
-                    <b>О себе:</b> {props.profile.aboutMe}<br></br>
-                    <b>Ищещь работу?</b> {props.profile.fullName.lookingForAJob ? "Да" : "Нет"}<br></br>
+                    <div> 
+                        <b>Имя:</b> {props.profile.fullName}
+                    </div>
+                    <div>
+                        <b>О себе:</b> {props.profile.aboutMe}<br></br>
+                    </div>
+                    <div>
+                        <b>Ищещь работу?</b> {props.profile.fullName.lookingForAJob ? "Да" : "Нет"}<br></br>
+                    </div>
+                        {props.profile.fullName.lookingForAJob 
+                            ? <div><b>Что умеешь?</b> {props.profile.lookingForAJobDescription}</div>  
+                            : null
+                        }
+                    
                 </div>
             </div>
         </div>
