@@ -4,6 +4,7 @@ const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_USER_STATUS'
 const SAVE_PHOTO = 'SAVE_PHOTO'
+const SAVE_PROFILE = 'SAVE_PROFILE'
 
 let initialState = {
     postData: [
@@ -52,6 +53,18 @@ const profileReducer = (state = initialState, action) => {
                 }
             }
         }
+        case SAVE_PROFILE: {
+            return {
+                ...state,
+                profile: {
+                    ...state.profile,
+                    fullName: action.fullName,
+                    aboutMe: action.aboutMe,
+                    lookingForAJob: action.lookingForAJob,
+                    lookingForAJobDescription: action.lookingForAJobDescription
+                }
+            }
+        }
 
         default:
             return state;
@@ -72,6 +85,8 @@ export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 export const setStatus = (status) => ({ type: SET_STATUS, status })
 
 export const savePhoto = (photos) => ({ type: SAVE_PHOTO, photos })
+
+export const saveProfile = (profile) => ({ type: SAVE_PROFILE, profile })
 
 //ThunkCreators
 export const getCurrentUserDataThunkCreator = (userId) => {
@@ -103,6 +118,16 @@ export const savePhotoThunkCreator = (file) => {
         let response = await profileAPI.savePhoto(file)
         if (response.data.resultCode === 0) {
             dispatch(savePhoto(response.data.data.photos))
+        }
+    }
+}
+
+export const saveProfileThunkCreator = (profileData) => {
+    return async (dispatch) => {
+        let response = await profileAPI.saveProfile(profileData)
+        if (response.data.resultCode === 0) {
+            debugger
+            dispatch(saveProfile(response.data.data))
         }
     }
 }

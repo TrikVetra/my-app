@@ -17,16 +17,30 @@ const ProfileInfo = (props) => {
         }
     }
 
-    const onSubmit = (formData) => {
-        formData.preventDefault();
-        let Data = {}
-        Data.fullName = formData.target[1].value 
-        Data.about = formData.target[2].value 
-        Data.lookingForAJob = formData.target[3].value 
-        Data.lookingForAJobDescription = formData.target[4].value 
-        console.log(Data) 
+    const onSubmit = async (formData) => {
+        let profile = {
+            aboutMe: formData.target[2].value,
+            contacts: {
+                facebook: null,
+                website: null,
+                vk: null,
+                twitter: null,
+                instagram: null,
+                youtube: null,
+                github: null,
+                mainLink: null
+            },
+            lookingForAJob: formData.target[3].value ,
+            lookingForAJobDescription: formData.target[4].value,
+            fullName: formData.target[1].value ,
+            userId: props.profile.userId, 
+        }
+
+        await props.saveProfile(profile)
+
         setEditMode(false)
-        // props.updateProfileThunkCreator(formData.email, formData.password, formData.rememberMe)
+        
+           
     }
 
     if (!props.profile) { //Если данных ещё нет, грузим прелоадер.

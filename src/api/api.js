@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import { saveProfile } from '../redux/profileReducer';
 
 const instance = axios.create ({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -50,7 +51,10 @@ export const profileAPI = {
                 }
             }
         )
-    }
+    },
+    saveProfile (profile) {
+        return instance.put(`profile/`, profile)
+    },
 }
 
 //API для логина

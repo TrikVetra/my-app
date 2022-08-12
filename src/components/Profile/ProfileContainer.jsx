@@ -7,7 +7,8 @@ import {
     getCurrentUserDataThunkCreator,
     getStatusThunkCreator,
     updateStatusThunkCreator,
-    savePhotoThunkCreator
+    savePhotoThunkCreator,
+    saveProfileThunkCreator
 } from "../../redux/profileReducer";
 import { compose } from 'redux';
 
@@ -64,6 +65,7 @@ class ProfileContainer extends React.Component {
                      status={this.props.status} 
                      updateStatus={this.props.updateStatusThunkCreator}
                      savePhoto={this.props.savePhotoThunkCreator}  
+                     saveProfile={this.props.saveProfileThunkCreator}
             />
         )
     }
@@ -85,7 +87,8 @@ compose (
             getCurrentUserDataThunkCreator,
             getStatusThunkCreator,
             updateStatusThunkCreator,
-            savePhotoThunkCreator
+            savePhotoThunkCreator,
+            saveProfileThunkCreator
         }),
     withRouter,
     //withAuthRedirect,

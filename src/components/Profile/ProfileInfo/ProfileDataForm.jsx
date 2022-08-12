@@ -7,8 +7,7 @@ import { reduxForm } from "redux-form"
 
 
 const ProfileDataForm = ({profile, toggleEditMode, onSubmit}) => {
-    return (
-        <form className={classes.autor_description} onSubmit={onSubmit}>            
+    return <form className={classes.autor_description} onSubmit={onSubmit}>            
             <div><button type='submit'>Сохранить изменения</button></div>            
             {CreateField('Имя', 'fullName', Input, 'text', [])}
             {CreateField('О себе', 'about', Input, 'text', [])}
@@ -34,7 +33,7 @@ const ProfileDataForm = ({profile, toggleEditMode, onSubmit}) => {
                 })}
             </div> */}
         </form>
-    )
+    
 }
 
 const ProfileDataReduxForm = reduxForm({ //контейнерная компонента для подключения Redux-form
