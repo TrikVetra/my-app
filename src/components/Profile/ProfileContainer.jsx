@@ -53,9 +53,10 @@ class ProfileContainer extends React.Component {
     }    
 
     componentDidUpdate(prevProps){ //prevProps (предыдущие пропсы) есть у этой компоненты жизненного цикла по умолчанию
-        if (this.props.profile.userId !== prevProps.profile.userId){ //Обновляем только если текущий id пользователя отличается от предыдущего.
-           this.refreshProfile()
-        }        
+        if ( this.props.profile.userId !== prevProps.profile.userId){ //Обновляем только если текущий id пользователя отличается от предыдущего.
+            this.refreshProfile()
+         }    
+        
     }
     
     render() {

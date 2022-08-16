@@ -1,4 +1,5 @@
 import { profileAPI } from "../api/api"
+import { stopSubmit } from "redux-form"
 
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -123,11 +124,16 @@ export const savePhotoThunkCreator = (file) => {
 }
 
 export const saveProfileThunkCreator = (profileData) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
+        const userId = getState().auth.userId
         let response = await profileAPI.saveProfile(profileData)
         if (response.data.resultCode === 0) {
+            dispatch(getCurrentUserDataThunkCreator(userId))
+        } else {
             debugger
-            dispatch(saveProfile(response.data.data))
+            let message = response.data.messages.length > 0 ? response.data.messages[0] : "ERROR";
+            dispatch(stopSubmit("edit-profile", { _error: message })); //Вызов метода redux-form, который призван в случае получения ошибки при неправильном вводе логина или пароля вывести ошибку.
+            return Promise.reject(message)
         }
     }
 }

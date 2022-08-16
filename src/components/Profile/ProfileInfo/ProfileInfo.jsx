@@ -17,29 +17,29 @@ const ProfileInfo = (props) => {
         }
     }
 
-    const onSubmit = async (formData) => {
+    const onSubmit = (formData) => {
+
         let profile = {
             aboutMe: formData.target[2].value,
             contacts: {
-                facebook: null,
-                website: null,
-                vk: null,
-                twitter: null,
-                instagram: null,
-                youtube: null,
-                github: null,
-                mainLink: null
+                facebook: formData.target[5].value,
+                website: formData.target[6].value,
+                vk: formData.target[7].value,
+                twitter: formData.target[8].value,
+                instagram: formData.target[9].value,
+                youtube: formData.target[10].value,
+                github: formData.target[11].value,
+                mainLink: formData.target[12].value,
             },
             lookingForAJob: formData.target[3].value ,
             lookingForAJobDescription: formData.target[4].value,
             fullName: formData.target[1].value ,
             userId: props.profile.userId, 
         }
-
-        await props.saveProfile(profile)
-
-        setEditMode(false)
         
+        props.saveProfile(profile).then( () => {
+            setEditMode(false)
+        } )        
            
     }
 
@@ -58,7 +58,7 @@ const ProfileInfo = (props) => {
                 <div>{isOwner ? <input type={"file"} onChange={photoSelected} /> : null}</div>
                 
                 {editMode 
-                ? <ProfileDataReduxForm profile={props.profile} onSubmit={onSubmit}/> 
+                ? <ProfileDataReduxForm initialValues={props.profile} onSubmit={onSubmit} profile={props.profile}/> 
                 : <ProfileData profile={props.profile} toggleEditMode={ () => {setEditMode(true)} } isOwner={isOwner} />
                 }
                 {editMode}
@@ -81,7 +81,7 @@ const ProfileData = ({profile, toggleEditMode, isOwner}) => {
                 <b>О себе:</b> {profile.aboutMe}<br></br>
             </div>
             <div>
-                <b>Ищещь работу?</b> {profile.fullName.lookingForAJob ? "Да" : "Нет"}<br></br>
+                <b>Ищещь работу?</b> {profile.lookingForAJob ? "Да" : "Нет"}<br></br>
             </div>
             {profile.fullName.lookingForAJob
                 ? <div><b>Что умеешь?</b> {profile.lookingForAJobDescription}</div>
