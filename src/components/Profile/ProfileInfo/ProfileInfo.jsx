@@ -8,7 +8,7 @@ import ProfileDataReduxForm from './ProfileDataForm';
 
 const ProfileInfo = (props) => {
 
-    let [editMode, setEditMode] = useState(false)
+    // let [editMode, setEditMode] = useState(false)
     let isOwner = false    
 
     const photoSelected = (e) => {
@@ -37,9 +37,7 @@ const ProfileInfo = (props) => {
             userId: props.profile.userId, 
         }
         
-        props.saveProfile(profile).then( () => {
-            setEditMode(false)
-        } )        
+        props.saveProfile(profile)
            
     }
 
@@ -57,11 +55,11 @@ const ProfileInfo = (props) => {
                 {props.profile.userId === props.auth.id ? isOwner = true : isOwner = false}
                 <div>{isOwner ? <input type={"file"} onChange={photoSelected} /> : null}</div>
                 
-                {editMode 
+                {props.isEditMode 
                 ? <ProfileDataReduxForm initialValues={props.profile} onSubmit={onSubmit} profile={props.profile}/> 
-                : <ProfileData profile={props.profile} toggleEditMode={ () => {setEditMode(true)} } isOwner={isOwner} />
+                : <ProfileData profile={props.profile} changeEditMode={() => {props.changeEditMode(true)} }  isOwner={isOwner} />
                 }
-                {editMode}
+                {props.isEditMode}
 
             </div>
 
@@ -70,10 +68,10 @@ const ProfileInfo = (props) => {
 
 }
 
-const ProfileData = ({profile, toggleEditMode, isOwner}) => {
+const ProfileData = ({profile, isOwner, changeEditMode}) => {
     return (
         <div className={classes.autor_description}>
-             {isOwner ? <button onClick={toggleEditMode}>Редактировать профиль</button> : null}
+             {isOwner ? <button onClick={changeEditMode}>Редактировать профиль</button> : null}
             <div>
                 <b>Имя:</b> {profile.fullName}
             </div>

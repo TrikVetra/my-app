@@ -6,6 +6,7 @@ const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_USER_STATUS'
 const SAVE_PHOTO = 'SAVE_PHOTO'
 const SAVE_PROFILE = 'SAVE_PROFILE'
+const CHANGE_EDIT_MODE = 'CHANGE_EDIT_MODE'
 
 let initialState = {
     postData: [
@@ -16,6 +17,7 @@ let initialState = {
     newPostText: "Yo!",
     profile: null,
     status: 'OK',
+    isEditMode: false
 }
 
 
@@ -66,6 +68,12 @@ const profileReducer = (state = initialState, action) => {
                 }
             }
         }
+        case CHANGE_EDIT_MODE: {
+            return {
+                ...state,
+                isEditMode: action.isEditMode
+            }
+        }
 
         default:
             return state;
@@ -81,13 +89,17 @@ export const addPostActionCreator = (message) =>
     message
 }) //return type
 
+export const changeEditMode = (isEditMode) => ({ type: CHANGE_EDIT_MODE, isEditMode })
+
 export const setUserProfile = (profile) => ({ type: SET_USER_PROFILE, profile })
 
 export const setStatus = (status) => ({ type: SET_STATUS, status })
 
 export const savePhoto = (photos) => ({ type: SAVE_PHOTO, photos })
 
-export const saveProfile = (profile) => ({ type: SAVE_PROFILE, profile })
+// export const saveProfile = (profile) => ({ type: SAVE_PROFILE, profile, isEditMode })
+
+
 
 //ThunkCreators
 export const getCurrentUserDataThunkCreator = (userId) => {
@@ -127,13 +139,16 @@ export const saveProfileThunkCreator = (profileData) => {
     return async (dispatch, getState) => {
         const userId = getState().auth.userId
         let response = await profileAPI.saveProfile(profileData)
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === 0) {            
             dispatch(getCurrentUserDataThunkCreator(userId))
+            dispatch(changeEditMode(false))
         } else {
-            debugger
+            changeEditMode(true)
             let message = response.data.messages.length > 0 ? response.data.messages[0] : "ERROR";
             dispatch(stopSubmit("edit-profile", { _error: message })); //Вызов метода redux-form, который призван в случае получения ошибки при неправильном вводе логина или пароля вывести ошибку.
+            dispatch(changeEditMode(true))
             return Promise.reject(message)
+
         }
     }
 }

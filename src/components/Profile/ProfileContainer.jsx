@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import Profile from "./Profile";
 import {
     setUserProfile,
+    changeEditMode,
     getCurrentUserDataThunkCreator,
     getStatusThunkCreator,
     updateStatusThunkCreator,
@@ -54,9 +55,9 @@ class ProfileContainer extends React.Component {
 
     componentDidUpdate(prevProps){ //prevProps (предыдущие пропсы) есть у этой компоненты жизненного цикла по умолчанию
         if ( this.props.profile.userId !== prevProps.profile.userId){ //Обновляем только если текущий id пользователя отличается от предыдущего.
+            
             this.refreshProfile()
-         }    
-        
+         }   
     }
     
     render() {
@@ -64,6 +65,7 @@ class ProfileContainer extends React.Component {
             <Profile {...this.props} 
                      profile={this.props.profile} 
                      status={this.props.status} 
+                     editMode={this.props.editMode}
                      updateStatus={this.props.updateStatusThunkCreator}
                      savePhoto={this.props.savePhotoThunkCreator}  
                      saveProfile={this.props.saveProfileThunkCreator}
@@ -77,6 +79,7 @@ let mapStateToProps = (state) => {
        profile: state.profilePage.profile, 
        status: state.profilePage.status,
        auth: state.auth,
+       isEditMode: state.profilePage.isEditMode
     }
 }
 
@@ -85,6 +88,7 @@ compose (
     connect(mapStateToProps,
         {
             setUserProfile,
+            changeEditMode,
             getCurrentUserDataThunkCreator,
             getStatusThunkCreator,
             updateStatusThunkCreator,

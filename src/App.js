@@ -40,7 +40,8 @@ class App extends React.Component {
                 <Route path='/profile/:userId' element={<ProfileContainer />} />
                 <Route path='/dialogs/*' element={<DialogsContainer />} />
                 <Route path='/users' element={<UsersContainer />} />
-                <Route path='/login' element={<LoginPage />} />              
+                <Route path='/login' element={<LoginPage />} />    
+                <Route path='/*' element={<div>404 not found</div>} />         
             </Routes>
             </Suspense>
           </div>
