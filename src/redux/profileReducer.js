@@ -119,11 +119,15 @@ export const getStatusThunkCreator = (userId) => {
 
 export const updateStatusThunkCreator = (status) => {
     return async (dispatch) => {
-        let response = await profileAPI.updateStatus(status)
-        if (response.data.resultCode === 0) {
-            dispatch(setStatus(status))
+        try {
+            let response = await profileAPI.updateStatus(status)
+            if (response.data.resultCode === 0) {
+                dispatch(setStatus(status))
+            }
+        } catch (error) {
+            console.log(error)
         }
-    }
+}
 }
 
 export const savePhotoThunkCreator = (file) => {

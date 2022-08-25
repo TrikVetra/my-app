@@ -1,5 +1,5 @@
 //import logo from './logo.svg';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 //import DialogsContainer from './components/Dialogs/DialogsContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
@@ -21,6 +21,9 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 class App extends React.Component {
   componentDidMount() {
     this.props.initializeApp()
+    window.addEventListener("unhandledrejection", () => { //Не уверена работает это или нет
+      console.log('Что-то пошло не так. Обратитесь к администратору.')
+    })
   }
 
   render() {
@@ -36,6 +39,7 @@ class App extends React.Component {
                 {/* Если в конце пути /* значит вместо * может быть что угодно. Если * нет, то путь должен быть точным. */}
                 {/* После : написано имя параметра по которому можно обратиться с помощью withRoute (useParams) к части адреса */}
                 {/* ? означает, что параметр опциональный (может быть, а может нет) */}
+                <Route path='/' element={<Navigate replace to="/profile/" />}/> 
                 <Route path='/profile/' element={<ProfileContainer />} />
                 <Route path='/profile/:userId' element={<ProfileContainer />} />
                 <Route path='/dialogs/*' element={<DialogsContainer />} />
