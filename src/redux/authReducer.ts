@@ -3,8 +3,17 @@ import { authAPI, loginAPI, securityAPI } from "../api/api";
 const SET_USER_DATA = 'auth/SET_USER_DATA';
 const GET_CUPTCHA_URL_SUCCESS = 'auth/GET_CUPTCHA_URL_SUCCESS'
 
+type InitialStateType = {
+    isFetching: boolean,
+    id: number | null,
+    email: string | null,
+    login: string | null,
+    isAuth: boolean,
+    rememberMe: boolean,
+    captchaUrl: string | null
+}
 
-let initialState = {
+let initialState: InitialStateType = {
     isFetching: false,
     id: null,
     email: '',
@@ -14,17 +23,17 @@ let initialState = {
     captchaUrl: null //if null then capcha is not required
 }
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
                 ...state,      // возвращаем копию состояния                
-                ...action.userData
+                ...action.payload
             };
         case GET_CUPTCHA_URL_SUCCESS:
             return {
                 ...state,
-                captchaUrl: action.url
+                ...action.payload
             }
         default:
             return state;
@@ -32,11 +41,28 @@ const authReducer = (state = initialState, action) => {
 }
 
 //ActionCreators
-export const setUserData = (id, email, login, isAuth) =>
-    ({ type: SET_USER_DATA, userData: { id, email, login, isAuth } })
+type SetUserDataActionPayloadType = {
+    id: number
+    email: string
+    login: string
+    isAuth: boolean
+}
 
-export const getCapchaUrlSuccess = (url) =>
-({ type: GET_CUPTCHA_URL_SUCCESS, url })
+type SetUserDataActionType = {
+    type: typeof SET_USER_DATA
+    payload: SetUserDataActionPayloadType
+}
+
+export const setUserData = (id: number, email: string, login: string, isAuth: boolean): SetUserDataActionType =>
+    ({ type: SET_USER_DATA, payload:{ id, email, login, isAuth } })
+
+type GetCapchaUrlSuccessActionType = {
+    type: typeof GET_CUPTCHA_URL_SUCCESS
+    payload: {url: string}
+}
+
+export const getCapchaUrlSuccess = (url: string): GetCapchaUrlSuccessActionType =>
+({ type: GET_CUPTCHA_URL_SUCCESS, payload: {url} })
 
 //ThunkCreators
 // export const getCurrentUserThunkCreator = () => (dispatch) => { //Лучше использовать async/aayt

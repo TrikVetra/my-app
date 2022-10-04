@@ -9,7 +9,7 @@ import Navbar from './components/Navbar/Navbar';
 import LoginPage from './components/Login/Login'
 import React, {Suspense} from 'react';
 import { connect, Provider } from 'react-redux';
-import { initializeApp } from './redux/appReducer'
+import { initializeApp } from './redux/appReducer.ts'
 import Preloader from './components/Common/Preloader/Preloader';
 import store from './redux/reduxStore';
 

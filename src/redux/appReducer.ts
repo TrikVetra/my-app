@@ -1,13 +1,16 @@
-import { getCurrentUserThunkCreator } from "./authReducer"
+import { getCurrentUserThunkCreator } from "./authReducer.ts"
 
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS';
 
+type InitialStateType = {
+    initialized: boolean
+}
 
-let initialState = {  
+let initialState: InitialStateType = {  
     initialized: false
 }
 
-const appReducer = (state = initialState, action) => {    
+const appReducer = (state = initialState, action):InitialStateType => {    
     switch (action.type) {
         case INITIALIZED_SUCCESS: 
             return {
@@ -19,8 +22,13 @@ const appReducer = (state = initialState, action) => {
     }    
 }
 
+//Инициализация типов
+type InitializedSuccessActionType = {
+    type: typeof INITIALIZED_SUCCESS
+}
+
 //ActionCreators
-export const initializedSuccess = () => ({type: INITIALIZED_SUCCESS})
+export const initializedSuccess = ():InitializedSuccessActionType => ({type: INITIALIZED_SUCCESS})
 
 //ThunkCreators
 export const initializeApp = () => (dispatch) => {      

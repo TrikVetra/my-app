@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import {
     setUserData,
     logoutThunkCreator
-} from '../../redux/authReducer'
+} from '../../redux/authReducer.ts'
 
 class HeaderContainer extends React.Component {
 

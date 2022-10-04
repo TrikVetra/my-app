@@ -2,7 +2,7 @@ import { reduxForm } from "redux-form" //reduxForm на сегодняшний �
 import { required } from "../../utils/validators/validators"
 import { Input, CreateField } from "../Common/FormsControls/FormsControls"
 import { connect } from "react-redux"
-import { loginThunkCreator, logoutThunkCreator } from "../../redux/authReducer"
+import { loginThunkCreator, logoutThunkCreator } from "../../redux/authReducer.ts"
 import { Navigate } from "react-router-dom"
 import style from "../Common/FormsControls/FormsControls.module.css"
 
