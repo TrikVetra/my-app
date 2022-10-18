@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, createStore, compose } from "redux"
 import profileReducer from "./profileReducer"
-import dialogReducer from "./dialogReducer"
+import dialogReducer from "./dialogReducer.ts"
 import usersReducer from "./usersReducer"
 import authReducer from "./authReducer.ts"
 import thunkMiddleware from  "redux-thunk"

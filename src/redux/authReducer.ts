@@ -3,25 +3,26 @@ import { authAPI, loginAPI, securityAPI } from "../api/api";
 const SET_USER_DATA = 'auth/SET_USER_DATA';
 const GET_CUPTCHA_URL_SUCCESS = 'auth/GET_CUPTCHA_URL_SUCCESS'
 
-type InitialStateType = {
-    isFetching: boolean,
-    id: number | null,
-    email: string | null,
-    login: string | null,
-    isAuth: boolean,
-    rememberMe: boolean,
-    captchaUrl: string | null
-}
+// type InitialStateType = {
+//     isFetching: boolean,
+//     id: number | null,
+//     email: string | null,
+//     login: string | null,
+//     isAuth: boolean,
+//     rememberMe: boolean,
+//     captchaUrl: string | null
+// }
 
-let initialState: InitialStateType = {
+let initialState = {
     isFetching: false,
-    id: null,
-    email: '',
-    login: '',
+    id: null as null | number,
+    email: '' as null | string,
+    login: '' as null | string,
     isAuth: false,
     rememberMe: false,
-    captchaUrl: null //if null then capcha is not required
+    captchaUrl: null as null | string //if null then capcha is not required
 }
+export type InitialStateType = typeof initialState
 
 const authReducer = (state = initialState, action): InitialStateType => {
     switch (action.type) {
@@ -42,9 +43,9 @@ const authReducer = (state = initialState, action): InitialStateType => {
 
 //ActionCreators
 type SetUserDataActionPayloadType = {
-    id: number
-    email: string
-    login: string
+    id: number | null
+    email: string | null
+    login: string | null
     isAuth: boolean
 }
 
@@ -53,12 +54,12 @@ type SetUserDataActionType = {
     payload: SetUserDataActionPayloadType
 }
 
-export const setUserData = (id: number, email: string, login: string, isAuth: boolean): SetUserDataActionType =>
+export const setUserData = (id: number | null, email: string | null, login: string | null, isAuth: boolean): SetUserDataActionType =>
     ({ type: SET_USER_DATA, payload:{ id, email, login, isAuth } })
 
 type GetCapchaUrlSuccessActionType = {
     type: typeof GET_CUPTCHA_URL_SUCCESS
-    payload: {url: string}
+    payload: {url: string | null}
 }
 
 export const getCapchaUrlSuccess = (url: string): GetCapchaUrlSuccessActionType =>
@@ -77,7 +78,7 @@ export const getCapchaUrlSuccess = (url: string): GetCapchaUrlSuccessActionType 
 // }
 
 export const getCurrentUserThunkCreator = () => {
-    return async (dispatch) => { //Лучше использовать async/aayt а не
+    return async (dispatch: any) => { //Лучше использовать async/aayt а не
         let response = await authAPI.getCurrentUser()
 
         if (response.data.resultCode === 0) {
@@ -89,8 +90,8 @@ export const getCurrentUserThunkCreator = () => {
 
 
 
-export const loginThunkCreator = (email, password, rememberMe, captcha) => {
-    return async (dispatch) => {
+export const loginThunkCreator = (email: string, password: string, rememberMe: boolean, captcha: any ) => {
+    return async (dispatch: any) => {
         let response = await loginAPI.login(email, password, rememberMe, captcha)
         if (response.data.resultCode === 0) {
             dispatch(getCurrentUserThunkCreator())
